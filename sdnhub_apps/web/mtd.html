@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SDN Web Display</title>
+
+    <!-- Bootstrap core CSS -->
+      <link rel="stylesheet" href="/web/css/button.css">
+
+      <link rel="stylesheet" href="/web/css/pure-min-0.5.0.css">
+    <link rel="stylesheet" href="/web/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/web/css/pure-custom.css">
+    <link rel="stylesheet" href="/web/css/joint.all.min.css">
+      <link rel="stylesheet" href="/web/css/pure-min.css">
+      <link rel="stylesheet" href="/web/css/my.css">
+      <!--<link rel="stylesheet" href="/web/css/bootstrap.css">-->
+      <link rel="stylesheet" href="/web/css/bootstrap-switch.css">
+      <link rel="stylesheet" href="/web/css/highlight.css">
+      <link rel="stylesheet" href="/web/css/main.css">
+
+
+<!--<style>-->
+
+    <!--.pull-left{-->
+        <!--display:none;-->
+        <!--position:absolute;-->
+        <!--border:1px solid #b7b7b7;-->
+        <!--background-color: #b7b7b7;-->
+        <!--opacity:1;-->
+        <!--color: #000000;-->
+        <!--z-index: 99999;-->
+    <!--}-->
+
+<!--</style>-->
+
+  </head>
+
+  <body>
+
+  <div class="header">
+      <div id="menu">
+      <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+          <img src="/web/img/sdnhub_logo.png" style="height:40px;vertical-align:middle;">
+          <a class="pure-menu-heading" href="/web/index.html">SDN MTD防御系统</a>
+      </div>
+  </div>
+  </div>
+  <style>
+      .custom-restricted-width {
+          /* To limit the menu width to the content of the menu: */
+          display: inline-block;
+          /* Or set the width explicitly: */
+          width: 10em;
+          visibility: visible;
+          z-index: 2;
+          width: 100%;
+
+      }
+      .custom-restricted-width > ul{
+          left: 0;
+          top: 0;
+          visibility: visible;
+      }
+      .div-0{
+          margin-left: auto;
+          margin-right: auto;
+      }
+      .div-2{
+          margin-left: auto;
+          margin-right: auto;
+      }
+      .div-2-1{
+          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+          background-color: #f1f1f1;
+          padding: 0.01em 16px;
+          padding-top: 16px!important;
+          padding-bottom: 16px!important;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-family: Verdana,sans-serif;
+          font-size: 15px;
+          line-height: 1.5;
+          font-family: Verdana,sans-serif;
+          font-size: 15px;
+          line-height: 1.5;
+          width: 20%;
+          float: left;
+          left:30%;
+          margin-left: 300px;
+          margin-top: 20px;
+
+      }
+
+
+      .div-2-1 h4{
+          font-weight: 400;
+          margin:  0;
+          font-size: 20px;
+          font-family: "Segoe UI",Arial,sans-serif;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          display: block;
+          -webkit-margin-before: 1.33em;
+          -webkit-margin-after: 1.33em;
+          -webkit-margin-start: 0px;
+          -webkit-margin-end: 0px;
+          font-weight: bold;
+          line-height: 1.5;
+          text-align: center;
+      }
+      .div-1{
+          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+          background-color: #f1f1f1;
+          padding: 0.01em 16px;
+          padding-top: 16px!important;
+          padding-bottom: 16px!important;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          font-size: 16px;
+          font-family: Verdana,sans-serif;
+          font-size: 15px;
+          line-height: 1.5;
+          font-family: Verdana,sans-serif;
+          font-size: 15px;
+          line-height: 1.5;
+          width: 20%;
+          float: left;
+          margin-left: 150px;
+
+
+      }
+      .div-1 h4{
+          font-weight: 400;
+          margin:  0;
+          font-size: 20px;
+          font-family: "Segoe UI",Arial,sans-serif;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+          display: block;
+          -webkit-margin-before: 1.33em;
+          -webkit-margin-after: 1.33em;
+          -webkit-margin-start: 0px;
+          -webkit-margin-end: 0px;
+          font-weight: bold;
+          line-height: 1.5;
+          text-align: center;
+      }
+      .div-1-1{
+          padding: 12px 16px;
+          border-left: 4px solid #4CAF50 !important;
+          margin: 20px 0;
+          font-family: Consolas,"courier new";
+          font-size: 16px;
+          line-height: 1.4;
+          width: auto;
+          background-color: #fff;
+          word-wrap: break-word;
+          box-sizing: border-box;
+          display: block;
+          height: 250px;
+      }
+
+
+
+
+  </style>
+
+  <div id="layout">
+      <div id="menu">
+          <div class="pure-menu custom-restricted-width ">
+              <ul>
+                  <li class=" ">
+                      <a href="/web/topology.html">拓扑展示
+                      <i class="fa fa1 fa-home"></i></a>
+                  </li>
+                  <li class=" ">
+                      <a href="/web/stats.html">数据分析
+                      <i class="fa fa1 fa-bar-chart-o"></i></a>
+                  </li>
+                  <li id="test1" class="menu-item-divided pure-menu-selected">
+                      <a href="/web/mtd.html">MTD防御模块
+                      <i class="fa fa1 fa-sitemap"></i></a>
+                  </li>
+                  <li id="test2" class="menu-item-divided">
+                      <a href="/web/attackdetect.html">攻击检测
+                          <i class="fa fa1 fa-bolt"></i></a>
+                  </li>
+              </ul>
+        </div>
+    </div>
+
+
+  <!--<div id="layout">-->
+      <!--<div id="menu">-->
+
+          <!--<div class="pure-menu custom-restricted-width">-->
+              <!--<ul class="pure-menu-list">-->
+                  <!--<li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">Flickr</a></li>-->
+                  <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Messenger</a></li>-->
+                  <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Sports</a></li>-->
+                  <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Finance</a></li>-->
+                  <!--<li class="pure-menu-item pure-menu-has-children">-->
+                      <!--<a href="#" id="menuLink1" class="pure-menu-link">More</a>-->
+                      <!--<ul class="pure-menu-children">-->
+                          <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Autos</a></li>-->
+                          <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Flickr</a></li>-->
+                          <!--<li class="pure-menu-item pure-menu-has-children">-->
+                          <!--</li>-->
+                      <!--</ul>-->
+                  <!--</li>-->
+              <!--</ul>-->
+          <!--</div>-->
+      <!--</div>-->
+  <!--</div>-->
+ <div id="main">
+
+    <div class="">
+        <!--<a class="pure-button pure-button-primary" href="http://10.109.247.234:8000/flows/"  target="iframe_a">displayflows</a></button>-->
+
+        <!--<a class="pure-button pure-button-primary"  href="http://10.109.247.234:8000/del_flows/"   target="iframe_a">delflows</a>-->
+        <!--<a class="pure-button pure-button-primary" href="http://10.109.247.234:8000/net/"   target="iframe_a">shownet</a>-->
+       <!--  <button onclick="location.href='http://10.109.247.234:8000/ping/'" class="pure-button pure-button-primary" target="iframe_a">Pingtest</button>
+        <button><a href="http://10.109.247.234:8000/flows/"   target="iframe_a">displayflows</a></button>
+        <button href="http://10.109.247.234:8000/version_nmap/" class="pure-button pure-button-primary" target="iframe_a">Version_detect</button>
+        <button onclick="location.href='http://10.109.247.234:8000/flows/'" class="pure-button pure-button-primary" target="iframe_a">displayflows</button> -->
+        <!-- <button href="http://10.109.247.234:8000/del_flows/" class="pure-button pure-button-primary" >delflows</button> -->
+        <div id="mtd" class="mtdfont" >
+            MTD防御模块
+            <button id="buttonreset" href="#" class="button button-3d button-primary button-rounded" onclick="reset()">复位</button>
+        </div>
+        <div class = "div-0">
+        <div class = "div-1">
+            <h4>主机发现</h4>
+            <div class="div-1-1">
+                主机发现MTD技术是针对主机发现攻击设计的MTD防御技术。在网络中部署该技术，可以实现对异常的主机发现流量的防御。
+            </div>
+            <!--<button href="#" class="button button-3d button-primary button-rounded" onclick="turnOn1()">主机发现</button>-->
+            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="switch-onColor1" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+        </div>
+        <div class = "div-1">
+            <h4>端口扫描</h4>
+            <div class="div-1-1">
+                端口扫描是指攻击者基于TCP/IP协议栈向网络中的主机发送各种传输层的数据包，用以获取网络中主机端口开放详细信息。在网络中部署端口扫描MTD技术，可以防御该种攻击方式。
+            </div>
+            <!--<button href="#" class="button button-3d button-primary button-rounded" onclick="turnOn2()">端口扫描</button>-->
+            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
+
+        </div>
+
+        <div class = "div-1">
+            <h4>指纹识别</h4>
+            <div class="div-1-1">
+                为了阻碍攻击者对主机的OS和Web应用指纹进行探测，
+                基于SDN的指纹识别MTD技术提供了一种将探测流量导向混淆区的方法。
+                混淆区的OS类型和Web应用类型和目标主机不同，通过混淆区的方式，攻击者无法准确的获取真正的目标主机的OS和Web指纹信息，
+                进而无法采用合适的恶意代码攻击目标主机。指纹识别MTD技术保护了目标主机的安全。
+            </div>
+            <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn3()">指纹识别</button>&nbsp;&nbsp;&nbsp;-->
+            &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+
+        </div>
+
+        <!--<div class = "div-1">-->
+            <!--<h4>随机多路径</h4>-->
+            <!--<div class="div-1-1">-->
+                <!--fdsafdasfdsafdasfuida健康大使空间防火防盗健康萨哈夫健康的撒谎好的就是卡回复健康大使会计法回复大家卡是否就卡上的划分空间啊是的回复大家看撒换房间卡死电话撒健康福哈数据库-->
+            <!--</div>-->
+            <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn3()">随机多路径</button>-->
+        <!--</div>-->
+
+        <!--<div class = "div-1">-->
+            <!--<h4>拓扑发现</h4>-->
+            <!--<div class="div-1-1">-->
+                <!--fdsafdasfdsafdasfuida健康大使空间防火防盗健康萨哈夫健康的撒谎好的就是卡回复健康大使会计法回复大家卡是否就卡上的划分空间啊是的回复大家看撒换房间卡死电话撒健康福哈数据库-->
+            <!--</div>-->
+            <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn4()">拓扑发现</button>-->
+        <!--</div>-->
+        </div>
+        <div class="div-2 ">
+            <div class = "div-2-1">
+                <h4>随机多路径</h4>
+                <div class="div-1-1">
+                    攻击者可能利用SDN交换机潜在的漏洞或后门获得其后台系统权限，然后在SDN交换机后台系统内截获其转发的数据包，窃取流量中的各种数据信息。
+                    网络流量嗅探MTD技术的目的是针对攻击者网络流量嗅探攻击进行防御，
+                    网络管理员可以通过在SDN控制器中部署该技术，实现对网络流量嗅探攻击较好的被动MTD防御。
+                </div>
+                <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn4()">随机多路径</button>-->
+                &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="switch-onColor4" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+            </div>
+            <div class = "div-2-1">
+                <h4>拓扑发现</h4>
+                <div class="div-1-1">
+                    LLTD(Link Layer Topology Discovery，链路层拓扑发现)技术是Windows Vista中采用的一种重要的网络设备发现协议。
+                    具有发现LLTD兼容设备的能力，可以发现有线和无线设备。
+                    拓扑映射MTD技术利用MTD的防御思想及LLTD协议交互流程，对基于LLTD技术的链路层拓扑映射做出有效的防御。
+                </div>
+                <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn5()">拓扑发现</button>-->
+                &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="switch-onColor5" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+            </div>
+            </div>
+    </div>
+
+
+
+
+  </div><!-- main -->
+  </div><!--layout -->
+
+
+  <script src="/web/js/menuclick.js"></script>
+  <script src="/web/js/jquery.min.js"></script>
+  <script src="/web/js/utils.js"></script>
+  <script src="/web/js/option.js"></script>
+  <script src="/web/js/highlight.js"></script>
+  <script src="/web/js/bootstrap-switch.js"></script>
+  <script src="/web/js/main.js"></script>
+  <!--<script type="text/javascript">-->
+      <!--function turnOn1(){-->
+<!--//          alert('trans success')-->
+          <!--$.post(url.concat("/v1.0/scan/host"),function(){-->
+          <!--},"json")-->
+          <!--$("#switch-onColor1").click();-->
+      <!--}-->
+      <!--function turnOn2(){-->
+<!--//          alert('trans success')-->
+          <!--$.post(url.concat("/v1.0/scan/port"),function(){-->
+          <!--},"json")-->
+          <!--$("#switch-onColor2").click();-->
+      <!--}-->
+      <!--function turnOn3(){-->
+<!--//          alert('trans success')-->
+          <!--$.post(url.concat("/v1.0/version/turnon"),function(){-->
+          <!--},"json")-->
+          <!--$("#switch-onColor3").click();-->
+      <!--}-->
+      <!--function turnOn4(){-->
+<!--//          alert('trans success')-->
+          <!--$.post(url.concat("/v1.0/choose/multipath"),function(){-->
+          <!--},"json")-->
+          <!--$("#switch-onColor4").click();-->
+      <!--}-->
+      <!--function turnOn5(){-->
+<!--//          alert('trans success')-->
+          <!--$.post(url.concat("/v1.0/disco/topo"),function(){-->
+          <!--},"json")-->
+          <!--$("#switch-onColor5").click();-->
+      <!--}-->
+
+  <!--</script>-->
+
+
+
+  <script type="text/javascript">
+      var pre = 'switch';
+      window.onload = enter_handler;
+      function enter_handler(){
+//          alert('hello');
+          for (var i=1;i < 6;i++){
+              var s  = pre+i.toString();
+              var a = sessionStorage.getItem(s);
+              if (a == '1'){
+                var st = "#switch-onColor"+i.toString();
+                $(st).bootstrapSwitch('state',true,true);
+               }
+          }
+
+      }
+
+
+
+      $('#switch-onColor1').on('switchChange.bootstrapSwitch', function(event, state) {
+          if(state == true){
+              sessionStorage.setItem('switch1','1');
+              $.post(url.concat("/v1.0/scan/host"),function(){
+              },"json")
+          }
+          else{
+              sessionStorage.setItem('switch1','0');
+              $.post(url.concat("/v1.0/disable/host"),function(){
+              },"json")
+          }
+      });
+      $('#switch-onColor2').on('switchChange.bootstrapSwitch', function(event, state) {
+          if(state == true){
+              sessionStorage.setItem('switch2','1');
+              $.post(url.concat("/v1.0/scan/port"),function(){
+              },"json")
+          }
+          else{
+              sessionStorage.setItem('switch2','0');
+              $.post(url.concat("/v1.0/disable/port"),function(){
+              },"json")
+          }
+      });
+      $('#switch-onColor3').on('switchChange.bootstrapSwitch', function(event, state) {
+          if(state == true){
+              sessionStorage.setItem('switch3','1');
+              $.post(url.concat("/v1.0/version/turnon"),function(){
+              },"json")
+          }
+          else{
+              sessionStorage.setItem('switch3','0');
+              $.post(url.concat("/v1.0/disable/version"),function(){
+              },"json")
+          }
+      });
+      $('#switch-onColor4').on('switchChange.bootstrapSwitch', function(event, state) {
+          if(state == true){
+              sessionStorage.setItem('switch4','1');
+              $.post(url.concat("/v1.0/choose/multipath"),function(){
+              },"json")
+          }
+          else{
+              sessionStorage.setItem('switch4','0');
+              $.post(url.concat("/v1.0/disable/multipath"),function(){
+              },"json")
+          }
+      });
+      $('#switch-onColor5').on('switchChange.bootstrapSwitch', function(event, state) {
+          if(state == true){
+              sessionStorage.setItem('switch5','1');
+              $.post(url.concat("/v1.0/disco/topo"),function(){
+              },"json")
+          }
+          else{
+              sessionStorage.setItem('switch5','0');
+              $.post(url.concat("/v1.0/disable/topo"),function(){
+              },"json")
+          }
+      });
+
+
+//      window.onbeforeunload = onclose;
+//      function onclose(){
+//          var warning="确认退出?";
+//
+//          if(event.clientX>document.body.clientWidth&&event.clientY<0||event.altKey){
+//              return warning;
+////              $.post(url.concat("/v1.0/reset"),function(){
+////              },"json")
+//          }
+////          return 'bye';
+//      }
+//      window.onunload = onunload_handler;
+//      function onunload_handler(){
+//          var warning="谢谢光临";
+//          return warning;
+//          if(event.clientY < 0||event.altKey||event.clientY>document.body.clientHeight){
+//              $.post(url.concat("/v1.0/reset"),function(){
+//              },"json")
+//          }
+//      }
+
+  </script>
+
+
+  </body>
+</html>

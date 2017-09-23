@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <!--<meta charset="utf-8">-->
+
+      <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+      <meta name="renderer" content="webkit">
+      <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+      <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+      <meta HTTP-EQUIV="expires" CONTENT="0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+
+    <title>SDN Web Display</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/web/css/pure-min-0.5.0.css">
+    <link rel="stylesheet" href="/web/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/web/css/pure-custom.css">
+  </head>
+
+  <body>
+
+  <div class="header">
+      <div id="menu">
+      <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+          <img src="/web/img/sdnhub_logo.png" style="height:40px;vertical-align:middle;">
+          <a class="pure-menu-heading" href="">SDN MTD防御系统</a>
+      </div>
+  </div>
+  </div>
+
+  <div id="layout">
+  <div id="menu">
+      <div class="pure-menu pure-menu-open">
+          <ul>
+              <li class=" ">
+                  <a href="/web/topology.html">拓扑展示
+                  <i class="fa fa1 fa-home"></i></a>
+              </li>
+              <li class="menu-item-divided pure-menu-selected">
+                  <a href="/web/stats.html">数据分析
+                  <i class="fa fa1 fa-bar-chart-o"></i></a>
+              </li>
+              <li class=" ">
+                  <a href="/web/mtd.html">MTD防御模块
+                      <i class="fa fa1 fa-sitemap"></i></a>
+              </li>
+              <li id="test2" class="">
+                  <a href="/web/attackdetect.html">攻击检测
+                      <i class="fa fa1 fa-bolt"></i></a>
+              </li>
+ </ul>
+ </div>
+ </div>
+
+ <div id="main">
+     <div class="tabGroup">
+         <input type="radio" id="port-stats" name="tabGroup1" class="port-stats" checked="checked"/>
+         <label for="port-stats">端口</label>
+
+         <input type="radio" id="flow-stats" name="tabGroup1" class="flow-stats"/>
+         <label for="flow-stats">流表</label>
+
+         <br/>
+
+
+
+         <div class="flow-stats">
+             <h2>流表数据</h2>
+             <button style="float:right;" type="submit" class="pure-button
+                 pure-button-primary" onclick="stopFlowStatsTableRefresh();stopwebfresh()">停止刷新</button>
+
+             <table class="pure-table pure-table-bordered"style="width:90%">
+                 <thead>
+                     <tr>
+                         <th rowspan="2">交换机</th>
+                         <th rowspan="2">传入端口</th>
+                         <th colspan="3">MAC 地址</th>
+                         <th colspan="3">IP 地址</th>
+                         <th colspan="2">传递链路</th>
+                         <th rowspan="2">转出端口</th>
+                         <th rowspan="2">耗时(毫秒)</th>
+                         <!--<th rowspan="2">数据包</th>-->
+                         <!--<th rowspan="2">字节</th>-->
+                     </tr>
+                     <tr>
+                         <th>源地址</th>
+                         <th>目的地址</th>
+                         <th>类型</th>
+                         <th>源地址</th>
+                         <th>目的地址</th>
+                         <th>类型</th>
+                         <th>源端口</th>
+                         <th>目的端口</th>
+                     </tr>
+                 </thead>
+                 <tbody id="flow-stats-data">
+                 </tbody>
+             </table>
+         </div>
+         <div class="port-stats">
+
+             <h2>端口数据</h2>
+             <button style="float:right;" type="submit" class="pure-button
+                 pure-button-primary" onclick="stopPortStatsTableRefresh();stopwebfresh()">停止刷新</button>
+
+
+             <table class="pure-table pure-table-bordered" style="width:90%">
+                 <thead>
+                 <tr>
+                     <th rowspan="2">交换机</th>
+                     <th rowspan="2">端口</th>
+                     <th colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         接收数据统计</th>
+                     <!--<th colspan="4">传输数据统计</th>-->
+                 </tr>
+                 <tr>
+                     <th>数据包</th>
+                     <th>字节数</th>
+                     <th>丢包</th>
+                     <th>错误</th>
+                     <!--<th>数据包</th>-->
+                     <!--<th>字节数</th>-->
+                     <!--<th>丢包</th>-->
+                     <!--<th>错误</th>-->
+                 </tr>
+                 </thead>
+                 <tbody id="port-stats-data">
+                 </tbody>
+             </table>
+
+         </div>
+     </div>
+ </div><!-- main -->
+</div><!--layout -->
+
+  <div class="footer">
+	  <p class="legal-copyright">
+
+	  </p>
+  </div>
+
+
+  <script src="/web/js/jquery.min.js"></script>
+  <script src="/web/js/port-stats.js"></script>
+  <script src="/web/js/flow-stats.js"></script>
+  <script src="/web/js/utils.js"></script>
+  // <script type="text/javascript">
+  //     function myrefresh(){
+  //         window.location.reload();
+  //     }
+  //     var webfresh = setInterval(function () {
+  //         myrefresh()
+  //     },9000); //指定1000=1秒刷新一次
+
+  //     function stopwebfresh(){
+  //         clearInterval(webfresh);
+  //     }
+
+  // </script>
+
+
+  </body>
+</html>

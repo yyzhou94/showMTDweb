@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SDN Web Display</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/web/css/pure-min-0.5.0.css">
+    <link rel="stylesheet" href="/web/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/web/css/pure-custom.css">
+    <link rel="stylesheet" href="/web/css/joint.all.min.css">
+  </head>
+
+  <body>
+
+  <div class="header">
+      <div id="menu">
+      <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
+          <img src="/web/img/sdnhub_logo.png" style="height:40px;vertical-align:middle;">
+          <a class="pure-menu-heading" href="">SDN MTD防御系统</a>
+      </div>
+  </div>
+  </div>
+
+  <div id="layout">
+  <div id="menu">
+      <div class="pure-menu pure-menu-open">
+          <ul>
+              <li class="menu-item-divided pure-menu-selected">
+                  <a href="/web/topology.html">拓扑展示
+                  <i class="fa fa1 fa-home"></i></a>
+              </li>
+              <li class=" ">
+                  <a href="/web/stats.html">数据分析
+                  <i class="fa fa1 fa-bar-chart-o"></i></a>
+              </li>
+              <li class=" ">
+                  <a href="/web/mtd.html">MTD防御模块
+                  <i class="fa fa1 fa-sitemap"></i></a>
+              </li>
+              <li id="" class="">
+                  <a href="/web/attackdetect.html">攻击检测
+                  <i class="fa fa1 fa-bolt"></i></a>
+              </li>
+
+ </ul>
+ </div>
+ </div>
+
+ <div id="main">
+      <h2>拓扑图</h2>
+     <h3>
+         <button style="float:left;" type="submit" class="pure-button
+                 pure-button-primary" onclick="stopDrawHostRefresh()">停止刷新</button>
+         </h3>
+      <div id="paper-container" class="paper">
+    </div>
+
+
+  </div><!-- main -->
+  </div><!--layout-->
+
+  <div class="footer">
+	  <p class="legal-copyright">
+
+	  </p>
+  </div>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+      <script src="/web/js/joint.all.min.js"></script>
+      <script src="/web/js/joint.shapes.erd.js"></script>
+      <script src="/web/js/jquery-1.7.1.min.js"></script>
+      <script src="/web/js/joint.layout.DirectedGraph.js"></script>
+      <script src="/web/js/topology.js"></script>
+  </body>
+</html>
