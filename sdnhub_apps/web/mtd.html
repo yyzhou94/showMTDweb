@@ -23,20 +23,6 @@
       <link rel="stylesheet" href="/web/css/main.css">
 
 
-<!--<style>-->
-
-    <!--.pull-left{-->
-        <!--display:none;-->
-        <!--position:absolute;-->
-        <!--border:1px solid #b7b7b7;-->
-        <!--background-color: #b7b7b7;-->
-        <!--opacity:1;-->
-        <!--color: #000000;-->
-        <!--z-index: 99999;-->
-    <!--}-->
-
-<!--</style>-->
-
   </head>
 
   <body>
@@ -199,100 +185,51 @@
     </div>
 
 
-  <!--<div id="layout">-->
-      <!--<div id="menu">-->
 
-          <!--<div class="pure-menu custom-restricted-width">-->
-              <!--<ul class="pure-menu-list">-->
-                  <!--<li class="pure-menu-item pure-menu-selected"><a href="#" class="pure-menu-link">Flickr</a></li>-->
-                  <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Messenger</a></li>-->
-                  <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Sports</a></li>-->
-                  <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Finance</a></li>-->
-                  <!--<li class="pure-menu-item pure-menu-has-children">-->
-                      <!--<a href="#" id="menuLink1" class="pure-menu-link">More</a>-->
-                      <!--<ul class="pure-menu-children">-->
-                          <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Autos</a></li>-->
-                          <!--<li class="pure-menu-item"><a href="#" class="pure-menu-link">Flickr</a></li>-->
-                          <!--<li class="pure-menu-item pure-menu-has-children">-->
-                          <!--</li>-->
-                      <!--</ul>-->
-                  <!--</li>-->
-              <!--</ul>-->
-          <!--</div>-->
-      <!--</div>-->
-  <!--</div>-->
  <div id="main">
 
     <div class="">
-        <!--<a class="pure-button pure-button-primary" href="http://10.109.247.234:8000/flows/"  target="iframe_a">displayflows</a></button>-->
-
-        <!--<a class="pure-button pure-button-primary"  href="http://10.109.247.234:8000/del_flows/"   target="iframe_a">delflows</a>-->
-        <!--<a class="pure-button pure-button-primary" href="http://10.109.247.234:8000/net/"   target="iframe_a">shownet</a>-->
-       <!--  <button onclick="location.href='http://10.109.247.234:8000/ping/'" class="pure-button pure-button-primary" target="iframe_a">Pingtest</button>
-        <button><a href="http://10.109.247.234:8000/flows/"   target="iframe_a">displayflows</a></button>
-        <button href="http://10.109.247.234:8000/version_nmap/" class="pure-button pure-button-primary" target="iframe_a">Version_detect</button>
-        <button onclick="location.href='http://10.109.247.234:8000/flows/'" class="pure-button pure-button-primary" target="iframe_a">displayflows</button> -->
-        <!-- <button href="http://10.109.247.234:8000/del_flows/" class="pure-button pure-button-primary" >delflows</button> -->
         <div id="mtd" class="mtdfont" >
             MTD防御模块
             <button id="buttonreset" href="#" class="button button-3d button-primary button-rounded" onclick="reset()">复位</button>
         </div>
         <div class = "div-0">
-        <div class = "div-1">
-            <h4>主机发现</h4>
-            <div class="div-1-1">
-                主机发现MTD技术是针对主机发现攻击设计的MTD防御技术。在网络中部署该技术，可以实现对异常的主机发现流量的防御。
-            </div>
-            <!--<button href="#" class="button button-3d button-primary button-rounded" onclick="turnOn1()">主机发现</button>-->
-            &nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input id="switch-onColor1" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
-        </div>
-        <div class = "div-1">
-            <h4>端口扫描</h4>
-            <div class="div-1-1">
-                端口扫描是指攻击者基于TCP/IP协议栈向网络中的主机发送各种传输层的数据包，用以获取网络中主机端口开放详细信息。在网络中部署端口扫描MTD技术，可以防御该种攻击方式。
-            </div>
-            <!--<button href="#" class="button button-3d button-primary button-rounded" onclick="turnOn2()">端口扫描</button>-->
-            &nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
+          <div class = "div-1">
+              <h4>主机发现</h4>
+              <div class="div-1-1">
+                  主机发现MTD技术是针对主机发现攻击设计的MTD防御技术。在网络中部署该技术，可以实现对异常的主机发现流量的防御。
+              </div>
+              &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input id="switch-onColor1" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+          </div>
+          <div class = "div-1">
+              <h4>端口扫描</h4>
+              <div class="div-1-1">
+                  端口扫描是指攻击者基于TCP/IP协议栈向网络中的主机发送各种传输层的数据包，用以获取网络中主机端口开放详细信息。在网络中部署端口扫描MTD技术，可以防御该种攻击方式。
+              </div>
+              &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
 
-        </div>
+          </div>
 
-        <div class = "div-1">
-            <h4>指纹识别</h4>
-            <div class="div-1-1">
-                为了阻碍攻击者对主机的OS和Web应用指纹进行探测，
-                基于SDN的指纹识别MTD技术提供了一种将探测流量导向混淆区的方法。
-                混淆区的OS类型和Web应用类型和目标主机不同，通过混淆区的方式，攻击者无法准确的获取真正的目标主机的OS和Web指纹信息，
-                进而无法采用合适的恶意代码攻击目标主机。指纹识别MTD技术保护了目标主机的安全。
-            </div>
-            <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn3()">指纹识别</button>&nbsp;&nbsp;&nbsp;-->
-            &nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+          <div class = "div-1">
+              <h4>指纹识别</h4>
+              <div class="div-1-1">
+                  为了阻碍攻击者对主机的OS和Web应用指纹进行探测，
+                  基于SDN的指纹识别MTD技术提供了一种将探测流量导向混淆区的方法。
+                  混淆区的OS类型和Web应用类型和目标主机不同，通过混淆区的方式，攻击者无法准确的获取真正的目标主机的OS和Web指纹信息，
+                  进而无法采用合适的恶意代码攻击目标主机。指纹识别MTD技术保护了目标主机的安全。
+              </div>
+              &nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
 
-        </div>
-
-        <!--<div class = "div-1">-->
-            <!--<h4>随机多路径</h4>-->
-            <!--<div class="div-1-1">-->
-                <!--fdsafdasfdsafdasfuida健康大使空间防火防盗健康萨哈夫健康的撒谎好的就是卡回复健康大使会计法回复大家卡是否就卡上的划分空间啊是的回复大家看撒换房间卡死电话撒健康福哈数据库-->
-            <!--</div>-->
-            <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn3()">随机多路径</button>-->
-        <!--</div>-->
-
-        <!--<div class = "div-1">-->
-            <!--<h4>拓扑发现</h4>-->
-            <!--<div class="div-1-1">-->
-                <!--fdsafdasfdsafdasfuida健康大使空间防火防盗健康萨哈夫健康的撒谎好的就是卡回复健康大使会计法回复大家卡是否就卡上的划分空间啊是的回复大家看撒换房间卡死电话撒健康福哈数据库-->
-            <!--</div>-->
-            <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn4()">拓扑发现</button>-->
-        <!--</div>-->
+          </div>
         </div>
         <div class="div-2 ">
             <div class = "div-2-1">
@@ -321,7 +258,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input id="switch-onColor5" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
             </div>
-            </div>
+        </div>
     </div>
 
 
@@ -338,40 +275,6 @@
   <script src="/web/js/highlight.js"></script>
   <script src="/web/js/bootstrap-switch.js"></script>
   <script src="/web/js/main.js"></script>
-  <!--<script type="text/javascript">-->
-      <!--function turnOn1(){-->
-<!--//          alert('trans success')-->
-          <!--$.post(url.concat("/v1.0/scan/host"),function(){-->
-          <!--},"json")-->
-          <!--$("#switch-onColor1").click();-->
-      <!--}-->
-      <!--function turnOn2(){-->
-<!--//          alert('trans success')-->
-          <!--$.post(url.concat("/v1.0/scan/port"),function(){-->
-          <!--},"json")-->
-          <!--$("#switch-onColor2").click();-->
-      <!--}-->
-      <!--function turnOn3(){-->
-<!--//          alert('trans success')-->
-          <!--$.post(url.concat("/v1.0/version/turnon"),function(){-->
-          <!--},"json")-->
-          <!--$("#switch-onColor3").click();-->
-      <!--}-->
-      <!--function turnOn4(){-->
-<!--//          alert('trans success')-->
-          <!--$.post(url.concat("/v1.0/choose/multipath"),function(){-->
-          <!--},"json")-->
-          <!--$("#switch-onColor4").click();-->
-      <!--}-->
-      <!--function turnOn5(){-->
-<!--//          alert('trans success')-->
-          <!--$.post(url.concat("/v1.0/disco/topo"),function(){-->
-          <!--},"json")-->
-          <!--$("#switch-onColor5").click();-->
-      <!--}-->
-
-  <!--</script>-->
-
 
 
   <script type="text/javascript">
@@ -452,31 +355,6 @@
               },"json")
           }
       });
-
-
-//      window.onbeforeunload = onclose;
-//      function onclose(){
-//          var warning="确认退出?";
-//
-//          if(event.clientX>document.body.clientWidth&&event.clientY<0||event.altKey){
-//              return warning;
-////              $.post(url.concat("/v1.0/reset"),function(){
-////              },"json")
-//          }
-////          return 'bye';
-//      }
-//      window.onunload = onunload_handler;
-//      function onunload_handler(){
-//          var warning="谢谢光临";
-//          return warning;
-//          if(event.clientY < 0||event.altKey||event.clientY>document.body.clientHeight){
-//              $.post(url.concat("/v1.0/reset"),function(){
-//              },"json")
-//          }
-//      }
-
   </script>
-
-
   </body>
 </html>

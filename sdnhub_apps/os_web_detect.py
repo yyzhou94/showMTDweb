@@ -42,7 +42,7 @@ IPV6 = ipv6.ipv6.__name__
 
 ATTACKER = {'ip':'10.0.0.1', 'mac':'10:00:00:00:00:01', 'port': 1}
 VICTIM = {'ip':'10.0.0.2', 'mac':'10:00:00:00:00:02', 'port': 4}
-FAKE_HOST = {'ip': '192.168.2.220', 'mac': '00:10:f3:2c:1d:9c', 'port': 5}
+FAKE_HOST = {'ip': '192.168.2.220', 'mac': '00:00:00:22:00:01', 'port': 5}
 OSVERSION_PRIORITY = 3
 IPV6_PRIORITY = 6
 CONFUSION_PROBABILITY = 0.8

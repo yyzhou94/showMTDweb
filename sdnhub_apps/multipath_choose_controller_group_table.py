@@ -2,7 +2,7 @@
 """
 Author: gztsoul
 Time: 2016/10/25 11:00
-License: GZT LICENSE 
+License: GZT LICENSE
         This License is compatible with the Apache License, Version 2.0 (the "License");
         you may not use this file except in compliance with the License.
         YOu may obtain a copy of the License at
@@ -63,7 +63,7 @@ MULTIPATH_PERIOD = 4
 MAX_CAPACITY = 10000000
 multipath_choose_enable = False
 
-  
+
 class MultipathChoose(app_manager.RyuApp):
     OFP_VERSION = [ofproto_v1_3.OFP_VERSION]
 
@@ -219,14 +219,14 @@ class MultipathChoose(app_manager.RyuApp):
             下面为最简单的解决方法,有更好的方法可以再进行尝试
         """
         # gzt mark: 简单解决办法
-        switch_port_1 = (6790944927334401058, 1)
-        switch_port_2 = (6790944927334400383, 2)
-        if (switch_port_1[0] in self.switches and switch_port_2[0] in self.switches):
-            # print '*************deal with normal switch*****************'
-            self.link_to_port[(switch_port_1[0], switch_port_2[0])] = (switch_port_1[1], switch_port_2[1])
-            self.link_to_port[(switch_port_2[0], switch_port_1[0])] = (switch_port_2[1], switch_port_1[1])
-            self.interior_ports[switch_port_1[0]].add(switch_port_1[1])
-            self.interior_ports[switch_port_2[0]].add(switch_port_2[1])
+        # switch_port_1 = (6790944927334401058, 1)
+        # switch_port_2 = (6790944927334400383, 2)
+        # if (switch_port_1[0] in self.switches and switch_port_2[0] in self.switches):
+        #     # print '*************deal with normal switch*****************'
+        #     self.link_to_port[(switch_port_1[0], switch_port_2[0])] = (switch_port_1[1], switch_port_2[1])
+        #     self.link_to_port[(switch_port_2[0], switch_port_1[0])] = (switch_port_2[1], switch_port_1[1])
+        #     self.interior_ports[switch_port_1[0]].add(switch_port_1[1])
+        #     self.interior_ports[switch_port_2[0]].add(switch_port_2[1])
 
 
         for link in link_list:
@@ -280,7 +280,7 @@ class MultipathChoose(app_manager.RyuApp):
                 else:
                     print '%5s' %('*'),
             print
-                
+
 
 
 
@@ -687,6 +687,7 @@ class MultipathChoose(app_manager.RyuApp):
             # 组的处理是把数据包从【2,3】端口传出去
             # 该处还存在问题，需要解决
             # TO-DO : gzt mark:
+            # Add by junjie: 提前預知了目的mac，有點取巧了
             if 1 in paths[0] and 7 in paths[0]:
                 dp_1 = datapaths[1]
                 ofproto = dp_1.ofproto

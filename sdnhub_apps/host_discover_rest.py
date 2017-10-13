@@ -44,13 +44,13 @@ class HostRest(app_manager.RyuApp):
 
     def __init__(self, *args, **kwargs):
         super(HostRest, self).__init__(*args, **kwargs)
-        
+
         wsgi = kwargs['wsgi']
-        
+
         host_discover = kwargs['host_discover']
         self.waiters = {}
         self.data = {}
-        
+
         self.data['waiters'] = self.waiters
         self.data['host_discover'] = host_discover
 
@@ -76,38 +76,6 @@ class HostRest(app_manager.RyuApp):
                        controller=HostController, action='reset',
                        conditions=dict(method=['POST']))
 
-    # @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
-    # def switch_features_handler(self, ev):
-    #     super(SimpleSwitchRest13, self).switch_features_handler(ev)
-    #     datapath = ev.msg.datapath
-    #     self.switches[datapath.id] = datapath
-    #     self.mac_to_port.setdefault(datapath.id, {})
-
-    # def set_mac_to_port(self, dpid, entry):
-    #     mac_table = self.mac_to_port.setdefault(dpid, {})
-    #     datapath = self.switches.get(dpid)
-    #
-    #     entry_port = entry['port']
-    #     entry_mac = entry['mac']
-    #
-    #     if datapath is not None:
-    #         parser = datapath.ofproto_parser
-    #         if entry_port not in mac_table.values():
-    #
-    #             for mac, port in mac_table.items():
-    #
-    #                 # from known device to new device
-    #                 actions = [parser.OFPActionOutput(entry_port)]
-    #                 match = parser.OFPMatch(in_port=port, eth_dst=entry_mac)
-    #                 self.add_flow(datapath, 1, match, actions)
-    #
-    #                 # from new device to known device
-    #                 actions = [parser.OFPActionOutput(port)]
-    #                 match = parser.OFPMatch(in_port=entry_port, eth_dst=mac)
-    #                 self.add_flow(datapath, 1, match, actions)
-    #
-    #             mac_table.update({entry_mac : entry_port})
-    #     return mac_table
 
 class HostController(ControllerBase):
 
@@ -154,10 +122,10 @@ class HostController(ControllerBase):
             # print "del-flow in s%d" %i
         for i in range(1,8):
             os.system("ovs-ofctl add-flow s%d priority=0,actions=CONTROLLER:65535" %i)
-        
+
 
         host_discover.host_scan_enable = True
-            
+
         print  "host_scan.host_scan_enable: ",host_discover.host_scan_enable
         print  "port_scan.port_scan_enable: ",port_scan.port_scan_enable
         print  "multipath_choose_controller_group_table.multipath_choose_enable: ",multipath_choose_controller_group_table.multipath_choose_enable
@@ -170,9 +138,9 @@ class HostController(ControllerBase):
         return Response(status=200,content_type='application/json',
                     body=json.dumps({'status':'success'}))
     def disable_host_scan(self,req, **kwargs):
-        
+
         host_discover.host_scan_enable = False
-        
+
         print  "host_discover.host_scan_enable: ",host_discover.host_scan_enable
         # port_scan.port_scan_enable = False
         # multipath_choose_controller_group_table.multipath_choose_enable = False

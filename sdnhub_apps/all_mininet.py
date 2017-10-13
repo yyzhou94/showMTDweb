@@ -9,6 +9,7 @@ from mininet.topo import Topo
 from mininet.node import RemoteController
 import os
 from bottle import route , run ,template
+import conf
 
 
 
@@ -87,16 +88,10 @@ def topoDiscover():
         print 'i am in portscan'
 
         result = h1.cmd(' nmap  ' + h2.IP() + '-21 -p T:17,20,21,22,43,80,119,169,143 ')
-        # a1 = result.find("\r")
-        # a2 = result.find("\n")
-        # a3 = result.find("\r\n")
-        # a4 = result.find("\n\r")
-        # 0 1 0 -1 
-        # return str(a1) + ' ' + str(a2)+ ' ' + str(a3)+ ' '+str(a4)+ ' ' 
         res = result.replace('\r\n','<br>')
         return res
 
-    @route('/arpscan/')    
+    @route('/arpscan/')
     def arpscan():
         for i in range(1,9):
             os.system("sudo ovs-ofctl del-flows  s%d" %i )
@@ -112,7 +107,7 @@ def topoDiscover():
 
 
 
-    @route('/icmpscan/')    
+    @route('/icmpscan/')
     def icmpscan():
         for i in range(1,9):
             os.system("sudo ovs-ofctl del-flows  s%d" %i )
@@ -131,12 +126,9 @@ def topoDiscover():
 
     @route ('/stop')
     def stop():
-        os.system('sudo ovs-vsctl del-port s1 eth2')
+        os.system('sudo ovs-vsctl del-port s1 ens33')
         os.system('sudo ifconfig s1 0')
-        os.system('sudo ifconfig eth2 192.168.2.254')
-        
-        os.system('sudo ovs-vsctl del-port s1 eth3')
-        os.system('sudo ifconfig eth3 192.168.0.254')
+        os.system('sudo ifconfig ens33 192.168.2.254')
 
         os.system('sudo killall lld2d')
         net.stop()
@@ -158,37 +150,19 @@ def topoDiscover():
     try:
         # 配置Hosts的MAC地址
         [ net.get(hosts[i]).setMAC('10:00:00:00:00:'+str(i+1)) for i in range(len(hosts)) ]
+        [net.get(hosts[i]).setIP('10.0.0.'+str(i+1), 24) for i in range(len(hosts))]
         # 执行各种命令
-        # print hosts
         [ net.get(hosts[i]).cmd('lld2d ' + hosts[i] + '-eth0') for i in range(len(hosts)) ]
         net.get(hosts[1]).cmd('python -m SimpleHTTPServer 80 &')
-        #[net.get(hosts[i]).cmd('python -m SimpleHTTPServer 80 &') for i in [2, 5, 6, 7]]
         [ net.get(hosts[i]).cmd('route add -net 192.168.2.0/24 dev ' + hosts[i] + '-eth0') for i in range(len(hosts)) ]
-        os.system('sudo ovs-vsctl add-port s1 eth2')
-        os.system('sudo ifconfig eth2 0')
+        os.system('sudo ovs-vsctl add-port s1 ens33')
+        os.system('sudo ifconfig ens33 0')
         os.system('sudo ifconfig s1 192.168.2.254')
-        # os.system('sudo route add -net 0/0 gw 192.168.2.254 dev s1')
 
-        # os.system('sudo ifconfig eth3 promisc')
-        # os.system('sudo ovs-vsctl add-port s1 eth3')
-        # os.system('sudo ifconfig eth3 0')
-        # os.system('sudo ifconfig eth2 promisc')
-        # os.system('sudo ovs-vsctl add-port s1 eth2')
-        # os.system('sudo ifconfig eth2 0')
-        # os.system('sudo ifconfig s1 192.168.2.254')
-
-        # net.get(hosts[0]).cmd('route add -net 192.168.2.0/24 dev ' + hosts[0] + '-eth0')
-
-
-        # 启动CLI
-        # CLI(net)
-        # lpy_CLI2(net)
-
-        # net.stop()
     except Exception,e:
         print e
         net.stop()
-    run(host = '10.109.247.234' , port = 8000)
+    run(host = '%s'%(conf.host) , port = 8000)
     # 启动web端
 
 
@@ -223,63 +197,6 @@ class MyTopo(Topo):
         self.addLink(switches[1], switches[2])
         self.addLink(switches[2], switches[3])
         self.addLink(switches[3], switches[4])
-        # self.addLink(s4, s1, bw=1, delay='10ms', loss=0, max_queue_size=1000, use_htb=True)
-
-
-
-# class lpy_CLI(CLI):
-#     def __init__( self, mininet ):
-#         self.connect()
-#         CLI.__init__(self, mininet)
-
-#     def do_exit( self, _line ):
-#         "Exit"
-#         self.disconnect()
-#         return 'exited by user command'
-
-#     def connect( self ):
-#         os.system('sudo ovs-vsctl add-port s1 eth2')
-#         os.system('sudo ifconfig eth2 0')
-#         os.system('sudo ifconfig s1 192.168.2.254')
-#         # os.system('sudo route add -net 0/0 gw 192.168.2.254 dev s1')
-
-#         os.system('sudo ifconfig eth3 promisc')
-#         os.system('sudo ovs-vsctl add-port s1 eth3')
-#         os.system('sudo ifconfig eth3 0')
-
-#     def disconnect( self ):
-#         os.system('sudo ovs-vsctl del-port s1 eth2')
-#         os.system('sudo ifconfig s1 0')
-#         os.system('sudo ifconfig eth2 192.168.2.254')
-#         # os.system('sudo ip route add 0/0 via 192.168.2.254 dev eth2')
-#         os.system('sudo killall lld2d')
-
-#         os.system('sudo ovs-vsctl del-port s1 eth3')
-#         os.system('sudo ifconfig eth3 192.168.0.254')
-
-# class lpy_CLI2(CLI):
-#     def __init__( self, mininet ):
-#         self.connect()
-#         CLI.__init__(self, mininet)
-
-#     def do_exit( self, _line ):
-#         "Exit"
-#         self.disconnect()
-#         return 'exited by user command'
-
-#     def connect( self ):
-#         os.system('sudo ifconfig eth2 promisc')
-#         os.system('sudo ovs-vsctl add-port s1 eth2')
-#         os.system('sudo ifconfig eth2 0')
-#         os.system('sudo ifconfig s1 192.168.2.254')
-#         # os.system('sudo route add -net 0/0 gw 192.168.2.254 dev s1')
-
-#     def disconnect( self ):
-#         os.system('sudo ovs-vsctl del-port s1 eth2')
-#         os.system('sudo ifconfig s1 0')
-#         os.system('sudo ifconfig eth2 192.168.2.254')
-#         # os.system('sudo ip route add 0/0 via 192.168.2.254 dev eth2')
-#         os.system('sudo killall lld2d')
 
 if __name__ == '__main__':
     setLogLevel('info')
