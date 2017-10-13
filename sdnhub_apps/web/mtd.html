@@ -9,18 +9,17 @@
     <title>SDN Web Display</title>
 
     <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" href="/web/css/button.css">
+    <link rel="stylesheet" href="css/button.css">
 
-      <link rel="stylesheet" href="/web/css/pure-min-0.5.0.css">
-    <link rel="stylesheet" href="/web/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/web/css/pure-custom.css">
-    <link rel="stylesheet" href="/web/css/joint.all.min.css">
-      <link rel="stylesheet" href="/web/css/pure-min.css">
-      <link rel="stylesheet" href="/web/css/my.css">
-      <!--<link rel="stylesheet" href="/web/css/bootstrap.css">-->
-      <link rel="stylesheet" href="/web/css/bootstrap-switch.css">
-      <link rel="stylesheet" href="/web/css/highlight.css">
-      <link rel="stylesheet" href="/web/css/main.css">
+    <link rel="stylesheet" href="css/pure-min-0.5.0.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/pure-custom.css">
+    <link rel="stylesheet" href="css/joint.all.min.css">
+    <link rel="stylesheet" href="css/pure-min.css">
+    <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="css/bootstrap-switch.css">
+    <link rel="stylesheet" href="css/highlight.css">
+    <link rel="stylesheet" href="css/main.css">
 
 
   </head>
@@ -62,71 +61,47 @@
       .div-2-1{
           box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
           background-color: #f1f1f1;
-          padding: 0.01em 16px;
-          padding-top: 16px!important;
-          padding-bottom: 16px!important;
+          /*changed by junjie*/
+          padding: 16px 16px ;
           -webkit-box-sizing: border-box;
           -moz-box-sizing: border-box;
+          /*changed by junjie*/
           box-sizing: border-box;
-          font-size: 16px;
           font-family: Verdana,sans-serif;
-          font-size: 15px;
-          line-height: 1.5;
-          font-family: Verdana,sans-serif;
-          font-size: 15px;
+          font-size: 0.7vw;
           line-height: 1.5;
           width: 20%;
           float: left;
           left:30%;
-          margin-left: 300px;
+          margin-left: 15vw;
           margin-top: 20px;
 
       }
-
-
-      .div-2-1 h4{
-          font-weight: 400;
-          margin:  0;
-          font-size: 20px;
-          font-family: "Segoe UI",Arial,sans-serif;
-          -webkit-box-sizing: border-box;
-          -moz-box-sizing: border-box;
-          box-sizing: border-box;
-          display: block;
-          -webkit-margin-before: 1.33em;
-          -webkit-margin-after: 1.33em;
-          -webkit-margin-start: 0px;
-          -webkit-margin-end: 0px;
-          font-weight: bold;
-          line-height: 1.5;
-          text-align: center;
-      }
       .div-1{
-          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+          box-shadow: 0 2px 10px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
           background-color: #f1f1f1;
-          padding: 0.01em 16px;
+          padding: 16px;
           padding-top: 16px!important;
           padding-bottom: 16px!important;
           -webkit-box-sizing: border-box;
           -moz-box-sizing: border-box;
           box-sizing: border-box;
-          font-size: 16px;
           font-family: Verdana,sans-serif;
-          font-size: 15px;
-          line-height: 1.5;
-          font-family: Verdana,sans-serif;
-          font-size: 15px;
+          /*changed by junjie*/
+          font-size: 0.8vw;
           line-height: 1.5;
           width: 20%;
           float: left;
-          margin-left: 150px;
+          margin-left: 8vw;
 
 
       }
-      .div-1 h4{
+      /*changed by junjie*/
+      h4 {
           font-weight: 400;
           margin:  0;
-          font-size: 20px;
+          /*changed by junjie*/
+          font-size: 1.1vw;
           font-family: "Segoe UI",Arial,sans-serif;
           -webkit-box-sizing: border-box;
           -moz-box-sizing: border-box;
@@ -142,12 +117,12 @@
       }
       .div-1-1{
           padding: 12px 16px;
-          border-left: 4px solid #4CAF50 !important;
-          margin: 20px 0;
+          border-left: 4px solid #4CAF50 ;
+          margin: 1vw 0;
           font-family: Consolas,"courier new";
-          font-size: 16px;
+          /*changed by junjie*/
+          font-size: 0.8vw;
           line-height: 1.4;
-          width: auto;
           background-color: #fff;
           word-wrap: break-word;
           box-sizing: border-box;
@@ -161,120 +136,123 @@
   </style>
 
   <div id="layout">
-      <div id="menu">
-          <div class="pure-menu custom-restricted-width ">
-              <ul>
-                  <li class=" ">
-                      <a href="/web/topology.html">拓扑展示
-                      <i class="fa fa1 fa-home"></i></a>
-                  </li>
-                  <li class=" ">
-                      <a href="/web/stats.html">数据分析
-                      <i class="fa fa1 fa-bar-chart-o"></i></a>
-                  </li>
-                  <li id="test1" class="menu-item-divided pure-menu-selected">
-                      <a href="/web/mtd.html">MTD防御模块
-                      <i class="fa fa1 fa-sitemap"></i></a>
-                  </li>
-                  <li id="test2" class="menu-item-divided">
-                      <a href="/web/attackdetect.html">攻击检测
-                          <i class="fa fa1 fa-bolt"></i></a>
-                  </li>
-              </ul>
+
+    <div id="menu">
+        <div class="pure-menu custom-restricted-width ">
+            <ul>
+                <li class=" ">
+                    <a href="/web/topology.html">拓扑展示
+                    <i class="fa fa1 fa-home"></i></a>
+                </li>
+                <li class=" ">
+                    <a href="/web/stats.html">数据分析
+                    <i class="fa fa1 fa-bar-chart-o"></i></a>
+                </li>
+                <li id="test1" class="menu-item-divided pure-menu-selected">
+                    <a href="/web/mtd.html">MTD防御模块
+                    <i class="fa fa1 fa-sitemap"></i></a>
+                </li>
+                <li id="test2" class="menu-item-divided">
+                    <a href="/web/attackdetect.html">攻击检测
+                        <i class="fa fa1 fa-bolt"></i></a>
+                </li>
+            </ul>
         </div>
     </div>
 
 
 
- <div id="main">
+    <div id="main">
 
-    <div class="">
-        <div id="mtd" class="mtdfont" >
-            MTD防御模块
-            <button id="buttonreset" href="#" class="button button-3d button-primary button-rounded" onclick="reset()">复位</button>
-        </div>
-        <div class = "div-0">
-          <div class = "div-1">
-              <h4>主机发现</h4>
-              <div class="div-1-1">
-                  主机发现MTD技术是针对主机发现攻击设计的MTD防御技术。在网络中部署该技术，可以实现对异常的主机发现流量的防御。
-              </div>
-              &nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input id="switch-onColor1" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+      <div class="">
+          <div id="mtd" class="mtdfont" >
+              MTD防御模块
+              <button id="buttonreset" href="#" class="button button-3d button-primary button-rounded" onclick="reset()">复位</button>
           </div>
-          <div class = "div-1">
-              <h4>端口扫描</h4>
-              <div class="div-1-1">
-                  端口扫描是指攻击者基于TCP/IP协议栈向网络中的主机发送各种传输层的数据包，用以获取网络中主机端口开放详细信息。在网络中部署端口扫描MTD技术，可以防御该种攻击方式。
-              </div>
-              &nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
-
-          </div>
-
-          <div class = "div-1">
-              <h4>指纹识别</h4>
-              <div class="div-1-1">
-                  为了阻碍攻击者对主机的OS和Web应用指纹进行探测，
-                  基于SDN的指纹识别MTD技术提供了一种将探测流量导向混淆区的方法。
-                  混淆区的OS类型和Web应用类型和目标主机不同，通过混淆区的方式，攻击者无法准确的获取真正的目标主机的OS和Web指纹信息，
-                  进而无法采用合适的恶意代码攻击目标主机。指纹识别MTD技术保护了目标主机的安全。
-              </div>
-              &nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
-
-          </div>
-        </div>
-        <div class="div-2 ">
-            <div class = "div-2-1">
-                <h4>随机多路径</h4>
+          <div class = "div-0">
+            <div class = "div-1">
+                <h4>主机发现</h4>
                 <div class="div-1-1">
-                    攻击者可能利用SDN交换机潜在的漏洞或后门获得其后台系统权限，然后在SDN交换机后台系统内截获其转发的数据包，窃取流量中的各种数据信息。
-                    网络流量嗅探MTD技术的目的是针对攻击者网络流量嗅探攻击进行防御，
-                    网络管理员可以通过在SDN控制器中部署该技术，实现对网络流量嗅探攻击较好的被动MTD防御。
+                    主机发现MTD技术是针对主机发现攻击设计的MTD防御技术。在网络中部署该技术，可以实现对异常的主机发现流量的防御。
                 </div>
-                <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn4()">随机多路径</button>-->
+                <!-- &nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                <div class='inbtn'>
+                    <input id="switch-onColor1" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger" style="text-align:center;">
+                </div>
+            </div>
+            <div class = "div-1">
+                <h4>端口扫描</h4>
+                <div class="div-1-1">
+                    端口扫描是指攻击者基于TCP/IP协议栈向网络中的主机发送各种传输层的数据包，用以获取网络中主机端口开放详细信息。在网络中部署端口扫描MTD技术，可以防御该种攻击方式。
+                </div>
                 &nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input id="switch-onColor4" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+                <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
+
             </div>
-            <div class = "div-2-1">
-                <h4>拓扑发现</h4>
+
+            <div class = "div-1">
+                <h4>指纹识别</h4>
                 <div class="div-1-1">
-                    LLTD(Link Layer Topology Discovery，链路层拓扑发现)技术是Windows Vista中采用的一种重要的网络设备发现协议。
-                    具有发现LLTD兼容设备的能力，可以发现有线和无线设备。
-                    拓扑映射MTD技术利用MTD的防御思想及LLTD协议交互流程，对基于LLTD技术的链路层拓扑映射做出有效的防御。
+                    为了阻碍攻击者对主机的OS和Web应用指纹进行探测，
+                    基于SDN的指纹识别MTD技术提供了一种将探测流量导向混淆区的方法。
+                    混淆区的OS类型和Web应用类型和目标主机不同，通过混淆区的方式，攻击者无法准确的获取真正的目标主机的OS和Web指纹信息，
+                    进而无法采用合适的恶意代码攻击目标主机。指纹识别MTD技术保护了目标主机的安全。
                 </div>
-                <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn5()">拓扑发现</button>-->
                 &nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input id="switch-onColor5" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+                <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+
             </div>
-        </div>
-    </div>
+          </div>
+          <div class="div-2 ">
+              <div class = "div-2-1">
+                  <h4>随机多路径</h4>
+                  <div class="div-1-1">
+                      攻击者可能利用SDN交换机潜在的漏洞或后门获得其后台系统权限，然后在SDN交换机后台系统内截获其转发的数据包，窃取流量中的各种数据信息。
+                      网络流量嗅探MTD技术的目的是针对攻击者网络流量嗅探攻击进行防御，
+                      网络管理员可以通过在SDN控制器中部署该技术，实现对网络流量嗅探攻击较好的被动MTD防御。
+                  </div>
+                  <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn4()">随机多路径</button>-->
+                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input id="switch-onColor4" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+              </div>
+              <div class = "div-2-1">
+                  <h4>拓扑发现</h4>
+                  <div class="div-1-1">
+                      LLTD(Link Layer Topology Discovery，链路层拓扑发现)技术是Windows Vista中采用的一种重要的网络设备发现协议。
+                      具有发现LLTD兼容设备的能力，可以发现有线和无线设备。
+                      拓扑映射MTD技术利用MTD的防御思想及LLTD协议交互流程，对基于LLTD技术的链路层拓扑映射做出有效的防御。
+                  </div>
+                  <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn5()">拓扑发现</button>-->
+                  &nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <input id="switch-onColor5" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+              </div>
+          </div>
+      </div>
 
 
 
 
-  </div><!-- main -->
+    </div><!-- main -->
   </div><!--layout -->
 
 
-  <script src="/web/js/menuclick.js"></script>
-  <script src="/web/js/jquery.min.js"></script>
-  <script src="/web/js/utils.js"></script>
-  <script src="/web/js/option.js"></script>
-  <script src="/web/js/highlight.js"></script>
-  <script src="/web/js/bootstrap-switch.js"></script>
-  <script src="/web/js/main.js"></script>
+  <script src="js/menuclick.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/option.js"></script>
+  <script src="js/highlight.js"></script>
+  <script src="js/bootstrap-switch.js"></script>
+  <script src="js/main.js"></script>
 
 
   <script type="text/javascript">
