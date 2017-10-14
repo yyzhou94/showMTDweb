@@ -29,7 +29,7 @@
   <div class="header">
       <div id="menu">
       <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
-          <img src="/web/img/sdnhub_logo.png" style="height:40px;vertical-align:middle;">
+          <!-- deleted by junjie -->
           <a class="pure-menu-heading" href="/web/index.html">SDN MTD防御系统</a>
       </div>
   </div>
@@ -50,34 +50,17 @@
           top: 0;
           visibility: visible;
       }
-      .div-0{
+      .threemodules{
           margin-left: auto;
           margin-right: auto;
+          overflow: hidden;
       }
-      .div-2{
+      .two-modules{
           margin-left: auto;
           margin-right: auto;
+          overflow: hidden;
       }
-      .div-2-1{
-          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
-          background-color: #f1f1f1;
-          /*changed by junjie*/
-          padding: 16px 16px ;
-          -webkit-box-sizing: border-box;
-          -moz-box-sizing: border-box;
-          /*changed by junjie*/
-          box-sizing: border-box;
-          font-family: Verdana,sans-serif;
-          font-size: 0.7vw;
-          line-height: 1.5;
-          width: 20%;
-          float: left;
-          left:30%;
-          margin-left: 15vw;
-          margin-top: 20px;
-
-      }
-      .div-1{
+      .three-modules-children{
           box-shadow: 0 2px 10px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
           background-color: #f1f1f1;
           padding: 16px;
@@ -93,7 +76,23 @@
           width: 20%;
           float: left;
           margin-left: 8vw;
-
+      }
+      .two-modules-children{
+          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+          background-color: #f1f1f1;
+          /*changed by junjie*/
+          padding: 16px ;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          /*changed by junjie*/
+          box-sizing: border-box;
+          font-family: Verdana,sans-serif;
+          font-size: 0.7vw;
+          line-height: 1.5;
+          width: 20%;
+          float: left;
+          margin-left: 15vw;
+          margin-top: 1vw;
 
       }
       /*changed by junjie*/
@@ -115,7 +114,7 @@
           line-height: 1.5;
           text-align: center;
       }
-      .div-1-1{
+      .description{
           padding: 12px 16px;
           border-left: 4px solid #4CAF50 ;
           margin: 1vw 0;
@@ -129,7 +128,9 @@
           display: block;
           height: 250px;
       }
-
+      .inbtn{
+          text-align: center;
+      }
 
 
 
@@ -169,10 +170,10 @@
               MTD防御模块
               <button id="buttonreset" href="#" class="button button-3d button-primary button-rounded" onclick="reset()">复位</button>
           </div>
-          <div class = "div-0">
-            <div class = "div-1">
+          <div class = "threemodules">
+            <div class = "three-modules-children">
                 <h4>主机发现</h4>
-                <div class="div-1-1">
+                <div class="description">
                     主机发现MTD技术是针对主机发现攻击设计的MTD防御技术。在网络中部署该技术，可以实现对异常的主机发现流量的防御。
                 </div>
                 <!-- &nbsp;&nbsp;&nbsp;
@@ -182,59 +183,59 @@
                     <input id="switch-onColor1" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger" style="text-align:center;">
                 </div>
             </div>
-            <div class = "div-1">
+            <div class = "three-modules-children">
                 <h4>端口扫描</h4>
-                <div class="div-1-1">
+                <div class="description">
                     端口扫描是指攻击者基于TCP/IP协议栈向网络中的主机发送各种传输层的数据包，用以获取网络中主机端口开放详细信息。在网络中部署端口扫描MTD技术，可以防御该种攻击方式。
                 </div>
-                &nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
+
+                <div class='inbtn'>
+                  <input id="switch-onColor2" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭"   data-on-color="danger">
+                </div>
 
             </div>
 
-            <div class = "div-1">
+            <div class = "three-modules-children">
                 <h4>指纹识别</h4>
-                <div class="div-1-1">
+                <div class="description">
                     为了阻碍攻击者对主机的OS和Web应用指纹进行探测，
                     基于SDN的指纹识别MTD技术提供了一种将探测流量导向混淆区的方法。
                     混淆区的OS类型和Web应用类型和目标主机不同，通过混淆区的方式，攻击者无法准确的获取真正的目标主机的OS和Web指纹信息，
                     进而无法采用合适的恶意代码攻击目标主机。指纹识别MTD技术保护了目标主机的安全。
                 </div>
-                &nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+
+                <div class='inbtn'>
+                  <input id="switch-onColor3" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+                </div>
 
             </div>
           </div>
-          <div class="div-2 ">
-              <div class = "div-2-1">
+          <div class="two-modules ">
+              <div class = "two-modules-children">
                   <h4>随机多路径</h4>
-                  <div class="div-1-1">
+                  <div class="description">
                       攻击者可能利用SDN交换机潜在的漏洞或后门获得其后台系统权限，然后在SDN交换机后台系统内截获其转发的数据包，窃取流量中的各种数据信息。
                       网络流量嗅探MTD技术的目的是针对攻击者网络流量嗅探攻击进行防御，
                       网络管理员可以通过在SDN控制器中部署该技术，实现对网络流量嗅探攻击较好的被动MTD防御。
                   </div>
-                  <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn4()">随机多路径</button>-->
-                  &nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input id="switch-onColor4" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+
+
+                  <div class='inbtn'>
+                    <input id="switch-onColor4" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+                  </div>
               </div>
-              <div class = "div-2-1">
+              <div class = "two-modules-children">
                   <h4>拓扑发现</h4>
-                  <div class="div-1-1">
+                  <div class="description">
                       LLTD(Link Layer Topology Discovery，链路层拓扑发现)技术是Windows Vista中采用的一种重要的网络设备发现协议。
                       具有发现LLTD兼容设备的能力，可以发现有线和无线设备。
                       拓扑映射MTD技术利用MTD的防御思想及LLTD协议交互流程，对基于LLTD技术的链路层拓扑映射做出有效的防御。
                   </div>
                   <!--<button id=""   href="#" class="button button-3d button-primary button-rounded" onclick="turnOn5()">拓扑发现</button>-->
-                  &nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <input id="switch-onColor5" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+
+                  <div class='inbtn'>
+                    <input id="switch-onColor5" class="bootstrap-switch-danger" type="checkbox" data-on-text="加载"  data-off-text="关闭" data-on-color="danger">
+                  </div>
               </div>
           </div>
       </div>
