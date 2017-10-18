@@ -6,7 +6,7 @@ import os
 from webob import Response
 from ryu.base import app_manager
 from ryu.app.sdnhub_apps import port_scan
-from ryu.app.sdnhub_apps import os_web_detect
+from ryu.app.sdnhub_apps import os_web_detect_snort
 from ryu.app.sdnhub_apps import host_discover
 from ryu.app.sdnhub_apps import multipath_choose_controller_group_table
 from ryu.app.sdnhub_apps import topo_disco_controller
@@ -85,7 +85,7 @@ class MultipathController(ControllerBase):
         print  "host_scan.host_scan_enable: ",host_discover.host_scan_enable
         print  "port_scan.port_scan_enable: ",port_scan.port_scan_enable
         print  "multipath_choose_controller_group_table.multipath_choose_enable: ",multipath_choose_controller_group_table.multipath_choose_enable
-        print  "os_web_detect.os_web_detect_enable: ",os_web_detect.os_web_detect_enable
+        print  "os_web_detect_snort.os_web_detect_enable: ",os_web_detect_snort.os_web_detect_enable
         print  "topo_disco_controller.topo_disco_enable: ",topo_disco_controller.topo_disco_enable
         # port_scan.port_scan_enable= False
         # host_discover.host_scan_enable = False

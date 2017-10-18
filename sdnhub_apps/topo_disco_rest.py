@@ -4,7 +4,7 @@ import logging
 import os
 from ryu.base import app_manager
 from ryu.app.sdnhub_apps import port_scan
-from ryu.app.sdnhub_apps import os_web_detect
+from ryu.app.sdnhub_apps import os_web_detect_snort
 from ryu.app.sdnhub_apps import host_discover
 from ryu.app.sdnhub_apps import multipath_choose_controller_group_table
 from ryu.app.sdnhub_apps import topo_disco_controller
@@ -49,13 +49,13 @@ class TopoRest(app_manager.RyuApp):
 
     def __init__(self, *args, **kwargs):
         super(TopoRest, self).__init__(*args, **kwargs)
-        
+
         wsgi = kwargs['wsgi']
-        
+
         topo_disco = kwargs['topo_disco']
         self.waiters = {}
         self.data = {}
-        
+
         self.data['waiters'] = self.waiters
         self.data['topo_disco'] = topo_disco
 
@@ -77,8 +77,8 @@ class TopoRest(app_manager.RyuApp):
         mapper.connect('topo_disco', '/v1.0/disable/topo',
                        controller=TopoController, action='disable_topo_disco',
                        conditions=dict(method=['POST']))
-        
-   
+
+
 class TopoController(ControllerBase):
 
     def __init__(self, req, link, data, **config):
@@ -107,12 +107,12 @@ class TopoController(ControllerBase):
             os.system("sudo ovs-ofctl del-flows  s%d" %i )
         for i in range(1,8):
             os.system("ovs-ofctl add-flow s%d priority=1,actions=CONTROLLER:65535" %i)
-    
+
         topo_disco_controller.topo_disco_enable = True
         print  "host_scan.host_scan_enable: ",host_discover.host_scan_enable
         print  "port_scan.port_scan_enable: ",port_scan.port_scan_enable
         print  "multipath_choose_controller_group_table.multipath_choose_enable: ",multipath_choose_controller_group_table.multipath_choose_enable
-        print  "os_web_detect.os_web_detect_enable: ",os_web_detect.os_web_detect_enable
+        print  "os_web_detect_snort.os_web_detect_enable: ",os_web_detect_snort.os_web_detect_enable
         print  "topo_disco_controller.topo_disco_enable: ",topo_disco_controller.topo_disco_enable
         return Response(status=200,content_type='application/json',
                     body=json.dumps({'status':'success'}))
