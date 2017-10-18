@@ -103,14 +103,8 @@ class HostController(ControllerBase):
         host_discover.START_MTD = False
         port_scan.START_MTD = False
         topo_disco_controller.START_MTD = False
-        print  "host_scan.host_scan_enable: ",host_discover.host_scan_enable
-        print  "port_scan.port_scan_enable: ",port_scan.port_scan_enable
-        print  "multipath_choose_controller_group_table.multipath_choose_enable: ",multipath_choose_controller_group_table.multipath_choose_enable
-        print  "os_web_detect.os_web_detect_enable: ",os_web_detect.os_web_detect_enable
-        print  "topo_disco_controller.topo_disco_enable: ",topo_disco_controller.topo_disco_enable
-        print  "host_discover.START_MTD: ",host_discover.START_MTD
-        print  "port_scan.START_MTD: ",port_scan.START_MTD
-        print  "topo_disco_controller.START_MTD: ",topo_disco_controller.START_MTD
+        self.del_flow()
+
 
         return Response(status=200,content_type='application/json',
                     body=json.dumps({'status':'success'}))
@@ -148,3 +142,7 @@ class HostController(ControllerBase):
         # topo_disco_controller.topo_disco_enable = False
         return Response(status=200,content_type='application/json',
                     body=json.dumps({'status':'success'}))
+
+    def del_flow(self):
+        for i in range(1,9):
+            os.system("sudo ovs-ofctl del-flows  s%d" %i )

@@ -4,21 +4,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="renderer" content="webkit">
-    <!-- changed by junjie -->
-    <meta name="description" content="Attacks detection">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
     <title>SDN Web Display</title>
 
     <!-- Bootstrap core CSS -->
-    <!-- changed by junjie -->
-    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="/web/css/button.css">
 
-    <link rel="stylesheet" href="css/pure-min-0.5.0.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/pure-custom.css">
-    <link rel="stylesheet" href="css/joint.all.min.css">
-    <link rel="stylesheet" href="css/pure-min.css">
-    <link rel="stylesheet" href="css/my.css">
+    <link rel="stylesheet" href="/web/css/pure-min-0.5.0.css">
+    <link rel="stylesheet" href="/web/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/web/css/pure-custom.css">
+    <link rel="stylesheet" href="/web/css/joint.all.min.css">
+    <link rel="stylesheet" href="/web/css/pure-min.css">
+    <link rel="stylesheet" href="/web/css/my.css">
 
 
 
@@ -29,7 +28,7 @@
 <div class="header">
     <div id="menu">
         <div class="home-menu pure-menu pure-menu-open pure-menu-horizontal pure-menu-fixed">
-            <!-- deleted by junjie -->
+            <img src="/web/img/sdnhub_logo.png" style="height:40px;vertical-align:middle;">
             <a class="pure-menu-heading" href="/web/index.html">SDN MTD防御系统</a>
         </div>
     </div>
@@ -102,7 +101,7 @@
 
                 <ul class="  button-dropdown-list is-below">
                     <li style="text-align: center"><a href="http://10.109.16.212:8000/portscan/" target="iframe_a" > 端口扫描</a></li>
-                    <li style="text-align: center"><a href="#" onclick="turnOn2_1()">启动MTD</a></li>
+                    <li style="text-align: center"><a href="#" onclick="turnOn2_1()" >启动MTD</a></li>
                     <li style="text-align: center"><a href="#" onclick="turnOn2_2()">关闭MTD</a></li>
 
                 </ul>
@@ -113,9 +112,9 @@
                     </button>
 
                 <ul class="  button-dropdown-list is-below">
-                    <li style="text-align: center"><a href="http://10.109.16.212:8000/version_nmap/"   target="iframe_a" >版本探测 </a></li>
-                    <li style="text-align: center"><a href="http://10.109.16.212:8000/versionstart/" target="iframe_a" >启动MTD</a></li>
-                    <li style="text-align: center"><a href="http://10.109.16.212:8000/versionstop/" target="iframe_a" >关闭MTD</a></li>
+                    <li style="text-align: center"><a href="http://10.109.16.212:8000/version_nmap/"   target="iframe_a" >指纹探测 </a></li>
+                    <li style="text-align: center"><a href="#" onclick='onOsSnort()'  >启动MTD</a></li>
+                    <li style="text-align: center"><a href="#" onclick='downOsSnort()' >关闭MTD</a></li>
 
                     <!--有待解决-->
                 </ul>
@@ -151,10 +150,14 @@
 
                 <ul class="  button-dropdown-list is-below">
                     <li style="text-align: center"><a href="http://10.109.16.212:8000/stop"  target="iframe_a" >停止演示</a></li>
-                    <li style="text-align: center"><a href="http://10.109.16.212:8000/flows/"  target="iframe_a" > 显示流表</a></li>
-                    <li style="text-align: center"><a href="http://10.109.16.212:8000/group_flows/"  target="iframe_a" > 显示组表</a></li>
+                    <!-- <li style="text-align: center"><a href="http://10.109.16.212:8000/flows/"  target="iframe_a" > 显示流表</a></li>
+                    <li style="text-align: center"><a href="http://10.109.16.212:8000/group_flows/"  target="iframe_a" > 显示组表</a></li> -->
+                    <!--<li><a href="http://10.109.16.212:8000/del_flows/"  target="iframe_a" > delflows</a></li>-->
+                    <!--<li><a href="http://10.109.16.212:8000/pingtest/"  target="iframe_a" > pingall</a></li>-->
+
+
                 </ul>
-                </span>
+                      </span>
                 </div>
             <div id = "right">
             <iframe id="frame"     src="frame.html"    name="iframe_a"></iframe>
@@ -163,14 +166,15 @@
         </div>
     </div><!-- main -->
 </div><!--layout -->
+<!--<footer class="main-footer">-->
+<!--</footer>-->
 
 
-
-<script src="js/menuclick.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/option.js"></script>
-<script src="js/button.js"></script>
+<script src="/web/js/menuclick.js"></script>
+<script src="/web/js/jquery.min.js"></script>
+<script src="/web/js/utils.js"></script>
+<script src="/web/js/option.js"></script>
+<script src="/web/js/button.js"></script>
 
 
 

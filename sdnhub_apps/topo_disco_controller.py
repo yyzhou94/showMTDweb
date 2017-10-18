@@ -52,6 +52,7 @@ from ryu.lib.packet import ethernet
 from ryu.lib.packet import ether_types
 from ryu.lib import hub
 
+import conf
 import lltd_parse
 import host_info
 import time
@@ -67,8 +68,8 @@ topo_disco_enable = False
 START_MTD = False
 
 # 隐藏的主机百分比和合并的交换机的百分比
-hosts_hide_percent = 0.5
-switches_merge_percent = 0.5
+hosts_hide_percent = conf.topo_hosts_hide_percent
+switches_merge_percent = conf.topo_switches_merge_percent
 
 
 class TopologyDiscover(app_manager.RyuApp):

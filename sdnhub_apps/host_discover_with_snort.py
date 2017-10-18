@@ -12,8 +12,8 @@ MTD阶段：该阶段统计上个阶段中主机通信的数据包数目，进�
          通信数目更多的主机更经常访问，更大的可能禁止那些相互直接访问较少的主机通信。
          但是通信较少的正常主机更可能被禁止。
 修改日志：
-该版本不再有 “初始阶段” 和 “MTD阶段”，所有的控制都是由 START_MTD和MONITOR_PERIOD参数调控，
-START_MTD: 为True表示开启MTD， 为False表示关闭MTD。
+该版本不再有 “初始阶段” 和 “MTD阶段”，所有的控制都是由 host_scan_enable和MONITOR_PERIOD参数调控，
+host_scan_enable: 为True表示开启MTD， 为False表示关闭MTD。
 
 """
 # ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
@@ -22,7 +22,7 @@ START_MTD: 为True表示开启MTD， 为False表示关闭MTD。
 #
 #  1、SLEEP_PERIOD = 100  # snort 的改变周期
 #  MONITOR_PERIOD = 20    # MTD 的变化周期
-#  START_MTD = True       # 开启MTD，默认为True
+#  host_scan_enable = True       # 开启MTD，默认为True
 #  IS_SNORT_ON = False    # 开启snort， 默认为False
 
 # gzt mark: 
@@ -93,7 +93,7 @@ else:
 
 SLEEP_PERIOD = 100
 MONITOR_PERIOD = 20
-START_MTD = True
+host_scan_enable = True
 IS_SNORT_ON = False
 
 
@@ -160,7 +160,7 @@ class SimpleMonitor(app_manager.RyuApp):
         # in this, ev has the attribute 'msg'
         # print 'in function switch feature'
         # print datetime.datetime.now()
-        print START_MTD
+        print host_scan_enable
         datapath = ev.msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
@@ -236,44 +236,44 @@ class SimpleMonitor(app_manager.RyuApp):
         # 处理从来没有通信的主机
         # gzt mark: 该处的处理逻辑需要完善
         # TO-DO: 逻辑需要修改
-        if START_MTD:
-            # print 'START_MTD1:',START_MTD
-            if eth.ethertype == ether_types.ETH_TYPE_ARP:
-                arp_pkt = pkt.get_protocols(arp.arp)[0]
-                opcode = arp_pkt.opcode
-                src_ip = arp_pkt.src_ip
-                if opcode == 1:
-                    # print arp_pkt
-                    # TO-DO 此处有keyerr， 
-                    # 需要判断 switch_link_hosts是否有dpid 键值
-                    if dpid in switch_link_hosts and (src, src_ip) in switch_link_hosts[dpid].values():
-                        dst_ip = arp_pkt.dst_ip
-                        if dst_ip in ipv4_dsts:
-                            # TO-DO 此处判断dst_ip 是否在该网络中
-                            eth_dst = None
-                            dpid2 = 0
-                            for dp_id in switch_link_hosts:
-                                for port in switch_link_hosts[dp_id]:
-                                    if dst_ip == switch_link_hosts[dp_id][port][1]:
-                                        eth_dst = switch_link_hosts[dp_id][port][0]
-                                        dpid2 = dp_id
-                                        break
-                                if dpid2:
-                                    break
-                            percent = self.drop_comm[(src,eth_dst)] if (src,eth_dst) in self.drop_comm else (1-DROP_PERCENT)
-                            # print percent
-                            if random.randrange(1,101) >= percent*100 and eth_dst:
-                                # print 'in add drop flow'
-                                actions = []
-                                self.add_flow(datapath, 3, parser.OFPMatch(eth_src=src,eth_dst=eth_dst), actions)
-                                self.add_flow(datapath, 3, parser.OFPMatch(eth_type=ether_types.ETH_TYPE_ARP,
-                                                                        eth_src=src, arp_tpa=dst_ip), actions)
-                                datapath = self.datapaths[dpid2]
-                                self.add_flow(datapath, 3, parser.OFPMatch(eth_src=eth_dst,eth_dst=src),actions)
-                                self.add_flow(datapath, 3, parser.OFPMatch(eth_type=ether_types.ETH_TYPE_ARP,
-                                                                        eth_src=eth_dst, arp_tpa=src_ip), actions)
-                                self.drop_comm.setdefault( (src, eth_dst), 0.2)
-                                return
+        # if host_scan_enable:
+            # print 'host_scan_enable1:',host_scan_enable
+            # if eth.ethertype == ether_types.ETH_TYPE_ARP:
+            #     arp_pkt = pkt.get_protocols(arp.arp)[0]
+            #     opcode = arp_pkt.opcode
+            #     src_ip = arp_pkt.src_ip
+            #     if opcode == 1:
+            #         # print arp_pkt
+            #         # TO-DO 此处有keyerr， 
+            #         # 需要判断 switch_link_hosts是否有dpid 键值
+            #         if dpid in switch_link_hosts and (src, src_ip) in switch_link_hosts[dpid].values():
+            #             dst_ip = arp_pkt.dst_ip
+            #             if dst_ip in ipv4_dsts:
+            #                 # TO-DO 此处判断dst_ip 是否在该网络中
+            #                 eth_dst = None
+            #                 dpid2 = 0
+            #                 for dp_id in switch_link_hosts:
+            #                     for port in switch_link_hosts[dp_id]:
+            #                         if dst_ip == switch_link_hosts[dp_id][port][1]:
+            #                             eth_dst = switch_link_hosts[dp_id][port][0]
+            #                             dpid2 = dp_id
+            #                             break
+            #                     if dpid2:
+            #                         break
+            #                 percent = self.drop_comm[(src,eth_dst)] if (src,eth_dst) in self.drop_comm else (1-DROP_PERCENT)
+            #                 # print percent
+            #                 if random.randrange(1,101) >= percent*100 and eth_dst:
+            #                     # print 'in add drop flow'
+            #                     actions = []
+            #                     self.add_flow(datapath, 3, parser.OFPMatch(eth_src=src,eth_dst=eth_dst), actions)
+            #                     self.add_flow(datapath, 3, parser.OFPMatch(eth_type=ether_types.ETH_TYPE_ARP,
+            #                                                             eth_src=src, arp_tpa=dst_ip), actions)
+            #                     datapath = self.datapaths[dpid2]
+            #                     self.add_flow(datapath, 3, parser.OFPMatch(eth_src=eth_dst,eth_dst=src),actions)
+            #                     self.add_flow(datapath, 3, parser.OFPMatch(eth_type=ether_types.ETH_TYPE_ARP,
+            #                                                             eth_src=eth_dst, arp_tpa=src_ip), actions)
+            #                     self.drop_comm.setdefault( (src, eth_dst), 0.2)
+            #                     return
 
         
 
@@ -303,178 +303,178 @@ class SimpleMonitor(app_manager.RyuApp):
                 self.add_flow(datapath, 2, match, actions)
 
         # gzt mark: lpy们的处理
-        elif START_MTD:
+        # elif host_scan_enable:
             #如果是不在线主机
-            # print 'START_MTD2:',START_MTD
-            if ARP in header_list and header_list[ARP].dst_ip not in ipv4_dsts:
-                # print 'I am here START_MTD,fake arp packet'
-                #在虚拟主机列表中不存在，即第一次访问这个不在线主机
-                if header_list[ARP].dst_ip not in self.virtual_host:
-                    #生成随机MAC地址
-                    eth_src = src
-                    Maclist=['00','00']
-                    for i in range(4):
-                        randstr = "".join(random.sample("0123456789abcdef",2))
-                        Maclist.append(randstr)
-                    randmac = ":".join(Maclist)
-                    # print randmac
-                    #因为是新的不在线主机，要根据FAKE概率决定其是否伪装
-                    if random.randrange(1,101) < FAKE:
-                        #若伪装则组装虚假回复包，并在虚拟主机料表中将其设为1，即在线
-                        # print 'virtual host on'
-                        self.virtual_host.setdefault(header_list[ARP].dst_ip,{})
-                        self.virtual_host[header_list[ARP].dst_ip][randmac] = 1
-                        pkt = packet.Packet()
-                        pkt.add_protocol(ethernet.ethernet(dst=src, src=randmac,
-                                                    ethertype=ether_types.ETH_TYPE_ARP))
-                        pkt.add_protocol(arp.arp(opcode=2,
-                                                src_mac=randmac,
-                                                src_ip=header_list[ARP].dst_ip,
-                                                dst_mac=src,
-                                                dst_ip=header_list[ARP].src_ip))
-                        pkt.serialize()
-                        data = pkt.data
-                        actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
-                        out = parser.OFPPacketOut(
-                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
-                                in_port=datapath.ofproto.OFPP_CONTROLLER,
-                                actions=actions, data=data)
-                        datapath.send_msg(out)
-                        return
-                    else:
-                        #若不伪装则组在虚拟主机料表中将其设为0，即不在线
-                        self.virtual_host.setdefault(header_list[ARP].dst_ip,{})
-                        self.virtual_host[header_list[ARP].dst_ip][randmac] = 0
-                        return
-                #如果存在于虚拟主机列表中，即不是第一次，则根据是否在线，即是1还是0决##定是否组装虚假包
-                else:
-                    eth_src = src
-                    # gzt mark: 此处的randmac为for 语句内的局部变量，下面if的语句绝对有错误
-                    randmac = self.virtual_host[header_list[ARP].dst_ip].keys()[0]
-                    # for mac in self.virtual_host[header_list[ARP].dst_ip]:
-                    #    randmac = mac
-                    #如果在线组装虚假包，不是则不管
-                    if self.virtual_host[header_list[ARP].dst_ip][randmac] == 1:
-                        pkt = packet.Packet()
-                        pkt.add_protocol(ethernet.ethernet(dst=src, src=randmac,
-                                                ethertype=ether_types.ETH_TYPE_ARP))
-                        pkt.add_protocol(arp.arp(opcode=2,
-                                                src_mac=randmac,
-                                                src_ip=header_list[ARP].dst_ip,
-                                                dst_mac=src,
-                                                dst_ip=header_list[ARP].src_ip))
-                        pkt.serialize()
-                        data = pkt.data
-                        actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
-                        out = parser.OFPPacketOut(
-                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
-                                in_port=datapath.ofproto.OFPP_CONTROLLER,
-                                actions=actions, data=data)
-                        datapath.send_msg(out)
-                        return
-            #针对不在线主机的ICMP请求，只要组装虚假包即可
-            elif ICMP in header_list and header_list[IPV4].dst not in ipv4_dsts:
-                # print 'I am here START_MTD,fake ICMP packet'
-                for mac in self.virtual_host[header_list[IPV4].dst]:
-                    if self.virtual_host[header_list[IPV4].dst][mac] == 1:
-                        # print 'FAKE ICMP packet'
-                        ip = header_list[IPV4].dst
-                        pkt = packet.Packet()
-                        pkt.add_protocol(ethernet.ethernet(dst=src,
-                                                    src=dst,
-                                                    ethertype=ether_types.ETH_TYPE_IP))
-                        pkt.add_protocol(ipv4.ipv4(dst=header_list[IPV4].src,
-                                                   src=header_list[IPV4].dst,
-                                                   proto=1))
-                        pkt.add_protocol(icmp.icmp(type_=0, code=0, csum=0,
-                                                   data=header_list[ICMP].data))
-                        try:
-                            pkt.serialize()
-                        except Exception,e:
-                            print e
-                            print self.virtual_host
-                            print ipv4_dsts
-                            time.sleep(10)
-                        data = pkt.data
-                        actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
-                        out = parser.OFPPacketOut(
-                                    datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
-                                    in_port=datapath.ofproto.OFPP_CONTROLLER,
-                                    actions=actions, data=data)
-                        datapath.send_msg(out)
-                        return
-                else:
-                    return
-            elif TCP in header_list and header_list[IPV4].dst not in ipv4_dsts:
-                # print 'I am here START_MTD,fake ICMP packet'
-                ipv4_src = header_list[IPV4].dst
-                ipv4_dst = header_list[IPV4].src
-                src_port = header_list[TCP].dst_port
-                dst_port = header_list[TCP].src_port
-                ack = header_list[TCP].seq+1
-                option=header_list[TCP].option
-                #根据Psa回复SYN ACK
-                if random.randrange(1,101) < Psa:
-                    pkt = packet.Packet()
-                    pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
-                                            ethertype=ether_types.ETH_TYPE_IP))
-                    pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
-                                            src=ipv4_src,dst=ipv4_dst))
-                    pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
-                                             seq=random.randrange(1, 0xFFFFFFFF),
-                                             ack=ack, bits=0x12, window_size=1024,
-                                             option=option))
-                    pkt.serialize()
-                    data = pkt.data
-                    actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
-                    out = parser.OFPPacketOut(
-                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
-                                in_port=datapath.ofproto.OFPP_CONTROLLER,
-                                actions=actions, data=data)
-                    datapath.send_msg(out)
-                    return
-                #根据Psa回复ACK
-                elif random.randrange(1,101) < Pa and random.randrange(1,101) >Psa:
-                    pkt = packet.Packet()
-                    pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
-                                            ethertype=ether_types.ETH_TYPE_IP))
-                    pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
-                                            src=ipv4_src,dst=ipv4_dst))
-                    pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
-                                             seq=random.randrange(1, 0xFFFFFFFF),
-                                             ack=ack, bits=0x10, window_size=1024,
-                                             option=option))
-                    pkt.serialize()
-                    data = pkt.data
-                    actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
-                    out = parser.OFPPacketOut(
-                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
-                                in_port=datapath.ofproto.OFPP_CONTROLLER,
-                                actions=actions, data=data)
-                    datapath.send_msg(out)
-                    return
-                #根据Psa回复RST
-                elif random.randrange(1,101) < Pr and random.randrange(1,101) >Pa:
-                    pkt = packet.Packet()
-                    pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
-                                            ethertype=ether_types.ETH_TYPE_IP))
-                    pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
-                                            src=ipv4_src,dst=ipv4_dst))
-                    pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
-                                             seq=random.randrange(1, 0xFFFFFFFF),
-                                             ack=ack, bits=0x04, window_size=1024,
-                                             option=option))
-                    pkt.serialize()
-                    data = pkt.data
-                    actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
-                    out = parser.OFPPacketOut(
-                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
-                                in_port=datapath.ofproto.OFPP_CONTROLLER,
-                                actions=actions, data=data)
-                    datapath.send_msg(out)
-                    return
-                else:
-                    return
+            # print 'host_scan_enable2:',host_scan_enable
+            # if ARP in header_list and header_list[ARP].dst_ip not in ipv4_dsts:
+            #     # print 'I am here host_scan_enable,fake arp packet'
+            #     #在虚拟主机列表中不存在，即第一次访问这个不在线主机
+            #     if header_list[ARP].dst_ip not in self.virtual_host:
+            #         #生成随机MAC地址
+            #         eth_src = src
+            #         Maclist=['00','00']
+            #         for i in range(4):
+            #             randstr = "".join(random.sample("0123456789abcdef",2))
+            #             Maclist.append(randstr)
+            #         randmac = ":".join(Maclist)
+            #         # print randmac
+            #         #因为是新的不在线主机，要根据FAKE概率决定其是否伪装
+            #         if random.randrange(1,101) < FAKE:
+            #             #若伪装则组装虚假回复包，并在虚拟主机料表中将其设为1，即在线
+            #             # print 'virtual host on'
+            #             self.virtual_host.setdefault(header_list[ARP].dst_ip,{})
+            #             self.virtual_host[header_list[ARP].dst_ip][randmac] = 1
+            #             pkt = packet.Packet()
+            #             pkt.add_protocol(ethernet.ethernet(dst=src, src=randmac,
+            #                                         ethertype=ether_types.ETH_TYPE_ARP))
+            #             pkt.add_protocol(arp.arp(opcode=2,
+            #                                     src_mac=randmac,
+            #                                     src_ip=header_list[ARP].dst_ip,
+            #                                     dst_mac=src,
+            #                                     dst_ip=header_list[ARP].src_ip))
+            #             pkt.serialize()
+            #             data = pkt.data
+            #             actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+            #             out = parser.OFPPacketOut(
+            #                     datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+            #                     in_port=datapath.ofproto.OFPP_CONTROLLER,
+            #                     actions=actions, data=data)
+            #             datapath.send_msg(out)
+            #             return
+            #         else:
+            #             #若不伪装则组在虚拟主机料表中将其设为0，即不在线
+            #             self.virtual_host.setdefault(header_list[ARP].dst_ip,{})
+            #             self.virtual_host[header_list[ARP].dst_ip][randmac] = 0
+            #             return
+            #     #如果存在于虚拟主机列表中，即不是第一次，则根据是否在线，即是1还是0决##定是否组装虚假包
+            #     else:
+            #         eth_src = src
+            #         # gzt mark: 此处的randmac为for 语句内的局部变量，下面if的语句绝对有错误
+            #         randmac = self.virtual_host[header_list[ARP].dst_ip].keys()[0]
+            #         # for mac in self.virtual_host[header_list[ARP].dst_ip]:
+            #         #    randmac = mac
+            #         #如果在线组装虚假包，不是则不管
+            #         if self.virtual_host[header_list[ARP].dst_ip][randmac] == 1:
+            #             pkt = packet.Packet()
+            #             pkt.add_protocol(ethernet.ethernet(dst=src, src=randmac,
+            #                                     ethertype=ether_types.ETH_TYPE_ARP))
+            #             pkt.add_protocol(arp.arp(opcode=2,
+            #                                     src_mac=randmac,
+            #                                     src_ip=header_list[ARP].dst_ip,
+            #                                     dst_mac=src,
+            #                                     dst_ip=header_list[ARP].src_ip))
+            #             pkt.serialize()
+            #             data = pkt.data
+            #             actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+            #             out = parser.OFPPacketOut(
+            #                     datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+            #                     in_port=datapath.ofproto.OFPP_CONTROLLER,
+            #                     actions=actions, data=data)
+            #             datapath.send_msg(out)
+            #             return
+            # #针对不在线主机的ICMP请求，只要组装虚假包即可
+            # elif ICMP in header_list and header_list[IPV4].dst not in ipv4_dsts:
+            #     # print 'I am here host_scan_enable,fake ICMP packet'
+            #     for mac in self.virtual_host[header_list[IPV4].dst]:
+            #         if self.virtual_host[header_list[IPV4].dst][mac] == 1:
+            #             # print 'FAKE ICMP packet'
+            #             ip = header_list[IPV4].dst
+            #             pkt = packet.Packet()
+            #             pkt.add_protocol(ethernet.ethernet(dst=src,
+            #                                         src=dst,
+            #                                         ethertype=ether_types.ETH_TYPE_IP))
+            #             pkt.add_protocol(ipv4.ipv4(dst=header_list[IPV4].src,
+            #                                        src=header_list[IPV4].dst,
+            #                                        proto=1))
+            #             pkt.add_protocol(icmp.icmp(type_=0, code=0, csum=0,
+            #                                        data=header_list[ICMP].data))
+            #             try:
+            #                 pkt.serialize()
+            #             except Exception,e:
+            #                 print e
+            #                 print self.virtual_host
+            #                 print ipv4_dsts
+            #                 time.sleep(10)
+            #             data = pkt.data
+            #             actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+            #             out = parser.OFPPacketOut(
+            #                         datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+            #                         in_port=datapath.ofproto.OFPP_CONTROLLER,
+            #                         actions=actions, data=data)
+            #             datapath.send_msg(out)
+            #             return
+            #     else:
+            #         return
+            # elif TCP in header_list and header_list[IPV4].dst not in ipv4_dsts:
+            #     # print 'I am here host_scan_enable,fake ICMP packet'
+            #     ipv4_src = header_list[IPV4].dst
+            #     ipv4_dst = header_list[IPV4].src
+            #     src_port = header_list[TCP].dst_port
+            #     dst_port = header_list[TCP].src_port
+            #     ack = header_list[TCP].seq+1
+            #     option=header_list[TCP].option
+            #     #根据Psa回复SYN ACK
+            #     if random.randrange(1,101) < Psa:
+            #         pkt = packet.Packet()
+            #         pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
+            #                                 ethertype=ether_types.ETH_TYPE_IP))
+            #         pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
+            #                                 src=ipv4_src,dst=ipv4_dst))
+            #         pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
+            #                                  seq=random.randrange(1, 0xFFFFFFFF),
+            #                                  ack=ack, bits=0x12, window_size=1024,
+            #                                  option=option))
+            #         pkt.serialize()
+            #         data = pkt.data
+            #         actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+            #         out = parser.OFPPacketOut(
+            #                     datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+            #                     in_port=datapath.ofproto.OFPP_CONTROLLER,
+            #                     actions=actions, data=data)
+            #         datapath.send_msg(out)
+            #         return
+            #     #根据Psa回复ACK
+            #     elif random.randrange(1,101) < Pa and random.randrange(1,101) >Psa:
+            #         pkt = packet.Packet()
+            #         pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
+            #                                 ethertype=ether_types.ETH_TYPE_IP))
+            #         pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
+            #                                 src=ipv4_src,dst=ipv4_dst))
+            #         pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
+            #                                  seq=random.randrange(1, 0xFFFFFFFF),
+            #                                  ack=ack, bits=0x10, window_size=1024,
+            #                                  option=option))
+            #         pkt.serialize()
+            #         data = pkt.data
+            #         actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+            #         out = parser.OFPPacketOut(
+            #                     datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+            #                     in_port=datapath.ofproto.OFPP_CONTROLLER,
+            #                     actions=actions, data=data)
+            #         datapath.send_msg(out)
+            #         return
+            #     #根据Psa回复RST
+            #     elif random.randrange(1,101) < Pr and random.randrange(1,101) >Pa:
+            #         pkt = packet.Packet()
+            #         pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
+            #                                 ethertype=ether_types.ETH_TYPE_IP))
+            #         pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
+            #                                 src=ipv4_src,dst=ipv4_dst))
+            #         pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
+            #                                  seq=random.randrange(1, 0xFFFFFFFF),
+            #                                  ack=ack, bits=0x04, window_size=1024,
+            #                                  option=option))
+            #         pkt.serialize()
+            #         data = pkt.data
+            #         actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+            #         out = parser.OFPPacketOut(
+            #                     datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+            #                     in_port=datapath.ofproto.OFPP_CONTROLLER,
+            #                     actions=actions, data=data)
+            #         datapath.send_msg(out)
+            #         return
+            #     else:
+            #         return
         data = None
         if msg.buffer_id == ofproto.OFP_NO_BUFFER:
             data = msg.data
@@ -514,7 +514,7 @@ class SimpleMonitor(app_manager.RyuApp):
             #     print self.host_as_src
 
             # 判断是否开启了MTD
-            if START_MTD:
+            if host_scan_enable:
                 for host in self.virtual_host:
                     for mac in self.virtual_host[host]:
                         if random.randrange(1,101) < FAKE:
@@ -775,18 +775,16 @@ class SimpleMonitor(app_manager.RyuApp):
         # if IS_SNORT_ON:
         # self.logger.info('dump alert is triggered')
         # self.logger.info('alert msg: %s', ''.join(ev.msg.alertmsg))
-        self.packet_print(ev.msg.pkt)
+        # self.packet_print(ev.msg.pkt)
 
         # gzt mark: 识别的恶意数据包必须为封装在IP数据包内的数据包。
-        pkt = packet.Packet(array.array('B', pkt))
-        header_list = dict(
-                    (p.protocol_name, p) for p in pkt.protocols if type(p) != str)
         if not self.attacker_ip:
             msg = ev.msg
             pkt = msg.pkt
-            pkt = packet.Packet(array.array('B', pkt))
             eth = pkt.get_protocol(ethernet.ethernet)
             _ipv4 = pkt.get_protocol(ipv4.ipv4)
+            header_list = dict(
+                (p.protocol_name, p)for p in pkt.protocols if type(p) != str)
             if not (eth and _ipv4):
                 return
 
@@ -802,16 +800,212 @@ class SimpleMonitor(app_manager.RyuApp):
             print 'attacker_mac:',self.attacker_mac
 
             # 封禁从攻击者来的数据包
-            (dpid, in_port, host_ip) = self._get_info(eth.src)
-            datapath = self.datapaths[dpid]
-            ofproto = datapath.ofproto
-            parser = datapath.ofproto_parser
-            match = parser.OFPMatch(in_port=in_port, eth_src=eth.src)
+            if eth.ethertype == ether_types.ETH_TYPE_ARP:
+                arp_pkt = pkt.get_protocols(arp.arp)[0]
+                opcode = arp_pkt.opcode
+                src_ip = arp_pkt.src_ip
+                if opcode == 1:
+                    # print arp_pkt
+                    # TO-DO 此处有keyerr， 
+                    # 需要判断 switch_link_hosts是否有dpid 键值
+                    if dpid in switch_link_hosts and (src, src_ip) in switch_link_hosts[dpid].values():
+                        dst_ip = arp_pkt.dst_ip
+                        if dst_ip in ipv4_dsts:
+                            # TO-DO 此处判断dst_ip 是否在该网络中
+                            eth_dst = None
+                            dpid2 = 0
+                            for dp_id in switch_link_hosts:
+                                for port in switch_link_hosts[dp_id]:
+                                    if dst_ip == switch_link_hosts[dp_id][port][1]:
+                                        eth_dst = switch_link_hosts[dp_id][port][0]
+                                        dpid2 = dp_id
+                                        break
+                                if dpid2:
+                                    break
+                            percent = self.drop_comm[(src,eth_dst)] if (src,eth_dst) in self.drop_comm else (1-DROP_PERCENT)
+                            # print percent
+                            if random.randrange(1,101) >= percent*100 and eth_dst:
+                                # print 'in add drop flow'
+                                actions = []
+                                self.add_flow(datapath, 3, parser.OFPMatch(eth_src=src,eth_dst=eth_dst), actions)
+                                self.add_flow(datapath, 3, parser.OFPMatch(eth_type=ether_types.ETH_TYPE_ARP,
+                                                                        eth_src=src, arp_tpa=dst_ip), actions)
+                                datapath = self.datapaths[dpid2]
+                                self.add_flow(datapath, 3, parser.OFPMatch(eth_src=eth_dst,eth_dst=src),actions)
+                                self.add_flow(datapath, 3, parser.OFPMatch(eth_type=ether_types.ETH_TYPE_ARP,
+                                                                        eth_src=eth_dst, arp_tpa=src_ip), actions)
+                                self.drop_comm.setdefault( (src, eth_dst), 0.2)
+                                return
+            if ARP in header_list and header_list[ARP].dst_ip not in ipv4_dsts:
+                # print 'I am here host_scan_enable,fake arp packet'
+                #在虚拟主机列表中不存在，即第一次访问这个不在线主机
+                if header_list[ARP].dst_ip not in self.virtual_host:
+                    #生成随机MAC地址
+                    eth_src = src
+                    Maclist=['00','00']
+                    for i in range(4):
+                        randstr = "".join(random.sample("0123456789abcdef",2))
+                        Maclist.append(randstr)
+                    randmac = ":".join(Maclist)
+                    # print randmac
+                    #因为是新的不在线主机，要根据FAKE概率决定其是否伪装
+                    if random.randrange(1,101) < FAKE:
+                        #若伪装则组装虚假回复包，并在虚拟主机料表中将其设为1，即在线
+                        # print 'virtual host on'
+                        self.virtual_host.setdefault(header_list[ARP].dst_ip,{})
+                        self.virtual_host[header_list[ARP].dst_ip][randmac] = 1
+                        pkt = packet.Packet()
+                        pkt.add_protocol(ethernet.ethernet(dst=src, src=randmac,
+                                                    ethertype=ether_types.ETH_TYPE_ARP))
+                        pkt.add_protocol(arp.arp(opcode=2,
+                                                src_mac=randmac,
+                                                src_ip=header_list[ARP].dst_ip,
+                                                dst_mac=src,
+                                                dst_ip=header_list[ARP].src_ip))
+                        pkt.serialize()
+                        data = pkt.data
+                        actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+                        out = parser.OFPPacketOut(
+                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+                                in_port=datapath.ofproto.OFPP_CONTROLLER,
+                                actions=actions, data=data)
+                        datapath.send_msg(out)
+                        return
+                    else:
+                        #若不伪装则组在虚拟主机料表中将其设为0，即不在线
+                        self.virtual_host.setdefault(header_list[ARP].dst_ip,{})
+                        self.virtual_host[header_list[ARP].dst_ip][randmac] = 0
+                        return
+                #如果存在于虚拟主机列表中，即不是第一次，则根据是否在线，即是1还是0决##定是否组装虚假包
+                else:
+                    eth_src = src
+                    # gzt mark: 此处的randmac为for 语句内的局部变量，下面if的语句绝对有错误
+                    randmac = self.virtual_host[header_list[ARP].dst_ip].keys()[0]
+                    # for mac in self.virtual_host[header_list[ARP].dst_ip]:
+                    #    randmac = mac
+                    #如果在线组装虚假包，不是则不管
+                    if self.virtual_host[header_list[ARP].dst_ip][randmac] == 1:
+                        pkt = packet.Packet()
+                        pkt.add_protocol(ethernet.ethernet(dst=src, src=randmac,
+                                                ethertype=ether_types.ETH_TYPE_ARP))
+                        pkt.add_protocol(arp.arp(opcode=2,
+                                                src_mac=randmac,
+                                                src_ip=header_list[ARP].dst_ip,
+                                                dst_mac=src,
+                                                dst_ip=header_list[ARP].src_ip))
+                        pkt.serialize()
+                        data = pkt.data
+                        actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+                        out = parser.OFPPacketOut(
+                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+                                in_port=datapath.ofproto.OFPP_CONTROLLER,
+                                actions=actions, data=data)
+                        datapath.send_msg(out)
+                        return
+            #针对不在线主机的ICMP请求，只要组装虚假包即可
+            elif ICMP in header_list and header_list[IPV4].dst not in ipv4_dsts:
+                # print 'I am here host_scan_enable,fake ICMP packet'
+                for mac in self.virtual_host[header_list[IPV4].dst]:
+                    if self.virtual_host[header_list[IPV4].dst][mac] == 1:
+                        # print 'FAKE ICMP packet'
+                        ip = header_list[IPV4].dst
+                        pkt = packet.Packet()
+                        pkt.add_protocol(ethernet.ethernet(dst=src,
+                                                    src=dst,
+                                                    ethertype=ether_types.ETH_TYPE_IP))
+                        pkt.add_protocol(ipv4.ipv4(dst=header_list[IPV4].src,
+                                                   src=header_list[IPV4].dst,
+                                                   proto=1))
+                        pkt.add_protocol(icmp.icmp(type_=0, code=0, csum=0,
+                                                   data=header_list[ICMP].data))
+                        try:
+                            pkt.serialize()
+                        except Exception,e:
+                            print e
+                            print self.virtual_host
+                            print ipv4_dsts
+                            time.sleep(10)
+                        data = pkt.data
+                        actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+                        out = parser.OFPPacketOut(
+                                    datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+                                    in_port=datapath.ofproto.OFPP_CONTROLLER,
+                                    actions=actions, data=data)
+                        datapath.send_msg(out)
+                        return
+                else:
+                    return
+            elif TCP in header_list and header_list[IPV4].dst not in ipv4_dsts:
+                # print 'I am here host_scan_enable,fake ICMP packet'
+                ipv4_src = header_list[IPV4].dst
+                ipv4_dst = header_list[IPV4].src
+                src_port = header_list[TCP].dst_port
+                dst_port = header_list[TCP].src_port
+                ack = header_list[TCP].seq+1
+                option=header_list[TCP].option
+                #根据Psa回复SYN ACK
+                if random.randrange(1,101) < Psa:
+                    pkt = packet.Packet()
+                    pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
+                                            ethertype=ether_types.ETH_TYPE_IP))
+                    pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
+                                            src=ipv4_src,dst=ipv4_dst))
+                    pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
+                                             seq=random.randrange(1, 0xFFFFFFFF),
+                                             ack=ack, bits=0x12, window_size=1024,
+                                             option=option))
+                    pkt.serialize()
+                    data = pkt.data
+                    actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+                    out = parser.OFPPacketOut(
+                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+                                in_port=datapath.ofproto.OFPP_CONTROLLER,
+                                actions=actions, data=data)
+                    datapath.send_msg(out)
+                    return
+                #根据Psa回复ACK
+                elif random.randrange(1,101) < Pa and random.randrange(1,101) >Psa:
+                    pkt = packet.Packet()
+                    pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
+                                            ethertype=ether_types.ETH_TYPE_IP))
+                    pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
+                                            src=ipv4_src,dst=ipv4_dst))
+                    pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
+                                             seq=random.randrange(1, 0xFFFFFFFF),
+                                             ack=ack, bits=0x10, window_size=1024,
+                                             option=option))
+                    pkt.serialize()
+                    data = pkt.data
+                    actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+                    out = parser.OFPPacketOut(
+                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+                                in_port=datapath.ofproto.OFPP_CONTROLLER,
+                                actions=actions, data=data)
+                    datapath.send_msg(out)
+                    return
+                #根据Psa回复RST
+                elif random.randrange(1,101) < Pr and random.randrange(1,101) >Pa:
+                    pkt = packet.Packet()
+                    pkt.add_protocol(ethernet.ethernet(dst=src, src=dst,
+                                            ethertype=ether_types.ETH_TYPE_IP))
+                    pkt.add_protocol(ipv4.ipv4(flags=0x02, proto=6,
+                                            src=ipv4_src,dst=ipv4_dst))
+                    pkt.add_protocol(tcp.tcp(src_port=src_port, dst_port=dst_port,
+                                             seq=random.randrange(1, 0xFFFFFFFF),
+                                             ack=ack, bits=0x04, window_size=1024,
+                                             option=option))
+                    pkt.serialize()
+                    data = pkt.data
+                    actions = [parser.OFPActionOutput(out_port), parser.OFPActionOutput(self.snort_port)]
+                    out = parser.OFPPacketOut(
+                                datapath=datapath, buffer_id=ofproto.OFP_NO_BUFFER,
+                                in_port=datapath.ofproto.OFPP_CONTROLLER,
+                                actions=actions, data=data)
+                    datapath.send_msg(out)
+                    return
+                else:
+                    return
 
-            self.add_flow(datapath, SNORT_PRIORITY, match, [])
-            self.snort_flow_entries.append( (dpid, match) )
-
-            self.packet_print(msg.pkt)
 
 
             timer = threading.Timer(SLEEP_PERIOD, self.cleanip)

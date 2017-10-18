@@ -30,30 +30,11 @@ def topoDiscover():
         for i in range(1,8):
             os.system("ovs-ofctl add-flow s%d priority=0,actions=CONTROLLER:65535" %i)
 
-    @route('/pingtest/')
-    def pingall():
-        result =""
-        for h in range(1,23):
-            h = net.get('h%d' %h)
-            result += h.cmd('ping -c 5 '+ ' 192.168.2.220 ')
-        res = result.replace('\r\n','<br>')
-        return res
 
     @route('/group_flows/')
     def show_group_flows():
         for i in range(1,9):
             os.system("ovs-ofctl  dump-groups -O OpenFlow13  s%d" %i)
-
-
-    @route('/versionstart/')
-    def start_version():
-        h1 = net.get('h1')
-        h1.cmd('ping -c 5 10.0.0.4 > /dev/null')
-
-    @route('/versionstop/')
-    def stop_version():
-        h1 = net.get('h1')
-        h1.cmd('ping -c 5 10.0.0.5 > /dev/null')
 
 
     @route('/ping/')
@@ -126,9 +107,12 @@ def topoDiscover():
 
     @route ('/stop')
     def stop():
+        "Exit"
         os.system('sudo ovs-vsctl del-port s1 ens33')
         os.system('sudo ifconfig s1 0')
         os.system('sudo ifconfig ens33 192.168.2.254')
+        # Added by junjie
+        os.system('sudo ovs-vsctl del-port s1 veth0')
 
         os.system('sudo killall lld2d')
         net.stop()
@@ -157,7 +141,9 @@ def topoDiscover():
         [ net.get(hosts[i]).cmd('route add -net 192.168.2.0/24 dev ' + hosts[i] + '-eth0') for i in range(len(hosts)) ]
         os.system('sudo ovs-vsctl add-port s1 ens33')
         os.system('sudo ifconfig ens33 0')
-        os.system('sudo ifconfig s1 192.168.2.254')
+        os.system('sudo ifconfig s1 %s' %(conf.interface2))
+        # Added by junjie
+        os.system('sudo ovs-vsctl add-port s1 veth0')
 
     except Exception,e:
         print e

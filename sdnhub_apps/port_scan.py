@@ -31,6 +31,8 @@ from ryu.lib.packet import vlan
 from ryu.lib.packet import ipv6
 
 from ryu.lib.packet import in_proto
+import conf
+
 
 ETHERNET = ethernet.ethernet.__name__
 VLAN = vlan.vlan.__name__
@@ -69,16 +71,15 @@ NORMAL = 'normal'
 ABNORMAL = 'abnormal'
 PRIORITY = {NORMAL:1, ARP:2, IPV4:4, IPV6:6, ICMP:11, TCP:12, UDP:12, ABNORMAL:20}
 IPV6_PRIORITY = 6
-FAKE = 20
 switch_link_hosts = host_info.switch_link_hosts
 ipv4_dsts = host_info.ipv4_dsts
 MONITOR_PERIOD = 30
 port_scan_enable = False
 
-Psa = 20
-Pa = 40
-Pr = 90
-FAKE = 50
+Psa = conf.port_psa
+Pa = conf.port_pa
+Pr = conf.port_pr
+FAKE = conf.port_fake
 
 class PortScan(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]

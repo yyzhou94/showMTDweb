@@ -48,6 +48,8 @@ from ryu.lib.packet import ipv4
 from ryu.lib.packet import tcp
 from ryu.lib.packet import udp
 from ryu.lib.packet import vlan
+import conf
+
 ETHERNET = ethernet.ethernet.__name__
 VLAN = vlan.vlan.__name__
 IPV4 = ipv4.ipv4.__name__
@@ -79,9 +81,9 @@ else:
 
 MONITOR_PERIOD = 20
 START_MTD = False
-FAKE = 50
-DROP_PERCENT = 0.5
-SHORT_SEQ_LEN = 6
+FAKE = conf.host_fake
+DROP_PERCENT = conf.host_drop_percent
+SHORT_SEQ_LEN = conf.host_short_seq_len
 host_scan_enable = False
 
 # priority

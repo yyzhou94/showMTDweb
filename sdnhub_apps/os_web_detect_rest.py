@@ -75,7 +75,7 @@ class OsSnortRest(app_manager.RyuApp):
                        controller=OsSnortController, action='disable_os_detect',
                        conditions=dict(method=['POST']))
 
-    
+
 class OsSnortController(ControllerBase):
 
     def __init__(self, req, link, data, **config):
@@ -87,10 +87,10 @@ class OsSnortController(ControllerBase):
     def enable_os_detect(self,req, **kwargs):
         for i in range(1,9):
             os.system("sudo ovs-ofctl del-flows  s%d" %i )
-        for i in range(1,8):    
+        for i in range(1,8):
             os.system("ovs-ofctl add-flow s%d priority=0,actions=CONTROLLER:65535" %i)
         os_web_detect.os_web_detect_enable = True
-           
+
         print  "host_scan.host_scan_enable: ",host_discover.host_scan_enable
         print  "port_scan.port_scan_enable: ",port_scan.port_scan_enable
         print  "multipath_choose_controller_group_table.multipath_choose_enable: ",multipath_choose_controller_group_table.multipath_choose_enable

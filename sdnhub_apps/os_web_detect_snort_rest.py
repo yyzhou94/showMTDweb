@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import json
 import logging
 
@@ -51,16 +53,9 @@ class OsSnortRest(app_manager.RyuApp):
         self.snort = kwargs['snortlib']
         self.snort.set_config(socket_config)
         self.snort.start_socket_server()
-        # self.snort = kwargs['snortlib']
-        # socket_config = {'unixsock': True}
-
-        # self.snort.set_config(socket_config)
-        # self.snort.start_socket_server()
-        # dpset = kwargs['dpset']
         os_web_detect_snort = kwargs['os_web_detect_snort']
         self.waiters = {}
         self.data = {}
-        # self.data['dpset'] = dpset
         self.data['waiters'] = self.waiters
         self.data['os_web_detect_snort'] = os_web_detect_snort
 
@@ -70,6 +65,14 @@ class OsSnortRest(app_manager.RyuApp):
 
         mapper = wsgi.mapper
 
+        mapper.connect('os_scan_snort', '/v1.0/scan/os_snort_mtd',
+                        controller=OsSnortController, action='on_snort_mtd',
+                        conditions=dict(method=['POST']))
+
+        mapper.connect('os_scan_snort', '/v1.0/scan/stop_os_snort_mtd',
+                        controller=OsSnortController, action='down_snort_mtd',
+                        conditions=dict(method=['POST']))
+
         mapper.connect('os_scan', '/v1.0/version/turnon',
                        controller=OsSnortController, action='enable_os_detect',
                        conditions=dict(method=['POST']))
@@ -78,22 +81,20 @@ class OsSnortRest(app_manager.RyuApp):
                        controller=OsSnortController, action='disable_os_detect',
                        conditions=dict(method=['POST']))
 
-    
+
 class OsSnortController(ControllerBase):
 
     def __init__(self, req, link, data, **config):
         super(OsSnortController, self).__init__(req, link, data, **config)
         self.os_web_detect_snort = data[simple_switch_instance_name]
-        # self.multipath_controller.multipath_controller_enable = False
-        # self.dpset = data['dpset']
 
     def enable_os_detect(self,req, **kwargs):
         for i in range(1,9):
             os.system("sudo ovs-ofctl del-flows  s%d" %i )
-        for i in range(1,8):    
+        for i in range(1,8):
             os.system("ovs-ofctl add-flow s%d priority=0,actions=CONTROLLER:65535" %i)
         os_web_detect_snort.os_web_detect_enable = True
-           
+
         print  "host_scan.host_scan_enable: ",host_discover.host_scan_enable
         print  "port_scan.port_scan_enable: ",port_scan.port_scan_enable
         print  "multipath_choose_controller_group_table.multipath_choose_enable: ",multipath_choose_controller_group_table.multipath_choose_enable
@@ -114,4 +115,20 @@ class OsSnortController(ControllerBase):
         return Response(status=200,content_type='application/json',
                     body=json.dumps({'status':'success'}))
 
+    # 将os_web_detect_snort里的SNORT_START值设置为True
+    def on_snort_mtd(self,req, **kwargs):
+        os_web_detect_snort.SNORT_START = True
+        print 'os_web_detect_snort.SNORT_START: ', os_web_detect_snort.SNORT_START
+        return Response(status=200, content_type='application/json',
+                    body=json.dumps({'status':'success'}))
 
+    # 将os_web_detect_snort里的SNORT_START值设置为False
+    def down_snort_mtd(self,req, **kwargs):
+        os_web_detect_snort.Flag = True
+        for i in range(1,9):
+            os.system("sudo ovs-ofctl del-flows  s%d" %i )
+        for i in range(1,8):
+            os.system("ovs-ofctl add-flow s%d priority=0,actions=CONTROLLER:65535" %i)
+        print 'os_web_detect_snort.SNORT_START: ', os_web_detect_snort.SNORT_START
+        return Response(status=200, content_type='application/json',
+                    body=json.dumps({'status':'success'}))

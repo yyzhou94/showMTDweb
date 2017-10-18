@@ -2,8 +2,7 @@
     font-family:'微软雅黑', 'Arial';
     font-weight:400;
     font-style:normal;
-    /*Add  by junjie*/
-    font-size:1.5vw;
+    font-size:35px;
     color: rgba(0, 0, 0, 0.99);
     text-align:center;
     /*line-height:normal;*/
@@ -22,7 +21,21 @@
     margin-top:20px;
     float:left;
 }
-
+/*#bt2{*/
+    /*position:absolute;*/
+    /*left:920px;*/
+    /*top:780px;*/
+/*}*/
+/*#bt3{*/
+    /*position:absolute;*/
+    /*left:1120px;*/
+    /*top:780px;*/
+/*}*/
+/*#bt4{*/
+    /*position:absolute;*/
+    /*left:1300px;*/
+    /*top:780px;*/
+/*}*/
 .main-footer {
     background: #202020;
     padding: 35px 0 0;
